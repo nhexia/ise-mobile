@@ -1,0 +1,63 @@
+/* Empty. Add your own CSS if you like */
+/*.header .col {
+    background-color:lightgrey;
+}
+
+
+
+.col:last-child {
+    border-right: solid 1px grey;
+}
+
+.row:last-child .col {
+    border-bottom: solid 1px grey;
+}
+*/
+body{
+	font-size:12px;
+}
+.main-table {
+	width:100%;
+	
+	tr{
+	
+		
+	}
+}
+
+.main-table tr:nth-child(even) {
+    background-color: #D6EDF3
+}
+
+tr{
+	
+}
+.head td{
+	padding:2px 6px;
+	border:solid 1px #999;
+	background-color:#002F3F ;
+	color:#fff;
+	vertical-align:middle;
+}
+.text-center{
+	text-align:center
+}
+.result td{
+	vertical-align:middle;
+	padding:2px 2px;
+	text-align:center;
+	border:solid 1px #999;
+}
+.actual-text{
+	
+	max-width:50px;
+	text-align:center;
+	padding:0 2px;
+	border:solid 1px #002F3F !important;
+}
+.actual-text-clear{
+	min-width:50px !important;
+	max-width:50px;
+	padding:6px 5px;
+
+}
