@@ -19,10 +19,7 @@ body{
 .main-table {
 	width:100%;
 	
-	tr{
-	
-		
-	}
+	order-collapse:collapse; 
 }
 
 .main-table tr:nth-child(even) {
@@ -61,3 +58,20 @@ tr{
 	padding:6px 5px;
 
 }
+.logo{
+    max-width: 300px;
+    text-align: center;
+    display: table-cell;
+    margin: auto;
+    padding: 70px 20px;
+}
+
+.search-table-outter {
+	overflow-x:auto; }
+th, td { 
+min-width: 60px;
+ }
+ .top-menu-img{
+	 
+	 width:260px;
+ }

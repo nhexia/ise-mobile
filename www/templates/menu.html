@@ -14,15 +14,18 @@
 
   <ion-side-menu side="left">
     <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
+     <img class="top-menu-img" src="img/Island-Star-Express-4.jpg"/>
     </ion-header-bar>
     <ion-content>
+	<div class="padding">
+		Welcome <strong>{{name}}</strong>
+	</div>
       <ion-list>
-	   <ion-item menu-close href="#/app/playlists">
+	   <ion-item menu-close href="#/app/manifest">
           Manifest
         </ion-item>
-        <ion-item menu-close ng-click="login()">
-          Login
+        <ion-item menu-close href="#/app/setting" >
+          Setting
         </ion-item>
         <!--<ion-item menu-close href="#/app/search">
           Search

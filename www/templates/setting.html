@@ -1,0 +1,35 @@
+<ion-view view-title="Setting">
+  <ion-content>
+  <div class="list">
+  
+  <div class="padding">
+	<div class="item item-input-inset">
+    <label class="item-input-wrapper">
+	
+      <input type="text" ng-model="serverUrl"   placeholder="Server URL">
+    </label>
+    <button class="button button-small button-balanced" ng-click="saveServerUrl()">
+      Submit
+    </button>
+	
+  </div>
+	<div class="padding">
+	
+        <button class="button button-block con-left ion-cloud-download button-calm" ng-click="syncBook()">
+		<ion-icon name="cloud-download"></ion-icon>
+		Download Database
+		</button>
+	</div>
+	
+	
+	</div>
+	<div class="padding">
+        <button class="button button-block con-left ion-power button-assertive" ng-click="logout()">
+		Logout
+		</button>
+      </div>
+	</div>
+	
+	
+  </ion-content>
+</ion-view>

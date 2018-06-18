@@ -9,6 +9,13 @@
     "gulp-sass": "^3.1.0"
   },
   "dependencies": {
-    "@ionic/pro": "1.0.20"
+    "@ionic/pro": "1.0.20",
+    "bower": "^1.8.4",
+    "cordova-sqlite-storage": "^2.3.2"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-sqlite-storage": {}
+    }
   }
 }

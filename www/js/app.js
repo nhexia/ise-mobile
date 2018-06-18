@@ -4,9 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'app.controllers','app.services','ngCordova','ngStorage'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$cordovaSQLite,$http) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,6 +19,34 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+	
+	if (window.cordova) {
+                    // App 
+                    
+        db = $cordovaSQLite.openDB({ name: "ise.db", iosDatabaseLocation:'default'});
+    } else {
+                    // browser
+        db = window.openDatabase("ise.db", '1', 'my', 1024 * 1024 * 100); // browser
+     }
+
+    var db_user_create = "CREATE TABLE IF NOT EXISTS user (ID interger primary key,username text,password text,complete_name text,status interger,last_sync text)";
+	var db_user_book = "CREATE TABLE IF NOT EXISTS  book (ID text primary key ,location text ,cv_number text ,account_name text ,book_a text ,book_k text ,book_foc text ,book_inf text ,book_tg text ,book_e text ,book_arrival text ,book_time text ,actual_a text ,actual_k text ,actual_foc text ,actual_inf text ,actual_tg text ,actual_e text ,actual_arrival text ,actual_time text ,resort_hotel text ,unit text ,unit_atd text ,driver text ,coordinator text ,sales_handle text ,agency text ,remarks text ,user text,status interger )";
+	$cordovaSQLite.execute(db, db_user_create, []).then(function(res) {
+		console.log("database user created");
+    }, function (err) {
+      console.error(err);
+    });
+	$cordovaSQLite.execute(db, db_user_book, []).then(function(res) {
+		console.log("database book created");
+    }, function (err) {
+      console.error(err);
+    });
+	
+	
+
+      
+     
+           
   });
 })
 
@@ -32,28 +60,28 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
+ .state('login', {
+  url: '/login',
+                      
+   templateUrl: 'templates/login.html',
+	controller: 'LoginCtrl'
+                        
   })
 
-  .state('app.browse', {
-      url: '/browse',
+  .state('app.setting', {
+      url: '/setting',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/setting.html',
+		  controller: 'SettingCtrl'
         }
       }
     })
-    .state('app.playlists', {
-      url: '/playlists',
+    .state('app.manifest', {
+      url: '/manifest',
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlists.html',
+          templateUrl: 'templates/manifest.html',
           controller: 'ManifestCtrl'
         }
       }
@@ -69,5 +97,5 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/login');
 });
