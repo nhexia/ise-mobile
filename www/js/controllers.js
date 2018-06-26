@@ -79,18 +79,19 @@ angular.module('app.controllers', [])
 
                 angular.forEach($scope.results, function (value, key) {
                     console.log($scope.itemcount + "== " + $scope.crt + "--- actual_a" + value.actual_a)
+                    if ($scope.itemcount == $scope.crt) {
 
+
+                        $ionicLoading.hide();
+                        //location.reload();
+
+                    }
                     Book.update(value).then(function (result) {
-                        if ($scope.itemcount == $scope.crt) {
 
-
-                            $ionicLoading.hide();
-                            //location.reload();
-
-                        }
                         $scope.crt++;
 
                     });
+
 
 
 
@@ -118,14 +119,7 @@ angular.module('app.controllers', [])
                     var time = document.getElementById(data + "-time");
 
                     var userId = $localStorage.userData.ID;
-                    console.log((a.value != result.book_a && a.value != "") + "-" +
-                            (k.value != result.book_k && k.value != "") + "-" +
-                            (foc.value != result.book_foc && foc.value != "") + "-" +
-                            (inf.value != result.book_inf && inf.value != "") + "-" +
-                            (tg.value != result.book_tg && tg.value != "") + "-" +
-                            (e.value != result.book_e && e.value != "") + "-" +
-                            (arrival.value != result.book_arrival && arrival.value != "") + "-" +
-                            (time.value != result.book_time && time.value != ""));
+                  
                     if (
                             (a.value != result.book_a && a.value != "") ||
                             (k.value != result.book_k && k.value != "") ||
