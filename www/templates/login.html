@@ -23,7 +23,10 @@
                     <span class="input-label">Password</span>
                     <input type="password" ng-model="loginData.password">
                 </label>
-
+                 <label ng-show="error[0]" class="item item-input">
+                    <span class="input-labe assertive">{{error[0]+"-"+error[1]}}</span>
+                    
+                </label>
                
                 <label class="item">
                     <button class="button button-block button-positive" ng-click="loginMe()">Log in</button>

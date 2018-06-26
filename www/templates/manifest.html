@@ -1,99 +1,95 @@
 <ion-view view-title="DAILY PASSENGER MANIFEST - ARRIVAL">
- <ion-buttons end>
-   <button (click)="searchToggle()">
-   <ion-icon name="search"></ion-icon>
- </button>
- </ion-buttons>
-  <ion-content>
-    <!--<ion-list>
-      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
-        {{playlist.title}}
-      </ion-item>
-    </ion-list>-->
-	
-	<div class="search-table-outter">
-	
-	<table class="main-table" cellspacing="2" cellpadding="">
-	
-		<thead>
-			<tr class="head">
-				  <td  colspan="3">Details</td>
-				  <td colspan="8" class="text-center">Booked <br/>Actual</td>
-				
-				  <td colspan="9" class="text-center">Information</td>
 
-			</tr>
-			 <tr class="head">
-				 <td >Location</td>
-				 <td >CVNumber</td>
-				 <td >Account Name	</td>
-				 <td >A</td>
-				 <td >K</td>
-				 <td >FOC</td>
-				<td >INF</td>
-				<td >TG</td>
-				<td >E</td>
-				<td >ARRIVAL</td>
-				<td >Time</td>
-				
-					<td >Sames as Booked?</td>
-					
-					
-				<td >Resort Hotel</td>
-				<td >Unit</td>
-				<td >Unit ATD</td>
-				<td >Driver</td>
-				<td >Coordinator</td>
-				<td >Sales Handle</td>
-				<td >Agency</td>
-				<td >Remarks</td>
-			
-				
-			</tr>
-			
-		</thead>
-	
-		<tbody>
-		
-			<tr class="result" ng-repeat="data in results">
-					
-			     <td >{{data['location']}}</td>
-				 <td >{{data['cv_number']}}</td>
-				 <td >{{data['account_name']}}</td>
-				 <td >
-				 <span class="actual-text-clear">{{data['book_a']}}</span>
-				 <input class="actual-text" ng-model="data['actual_a']" ng-value="data['actual_a']" id="{{data['ID']+'-a'}}" type="text" ng-model value="{{data['actual_a']}}"></td>
-			     <td ><span class="actual-text-clear">{{data['book_k']}}</span>
-				 <input class="actual-text" ng-model="data['actual_k']" id="{{data['ID']+'-k'}}" type="text" value="{{data['actual_k']}}"></td>
-				 <td ><span class="actual-text-clear">{{data['book_foc']}}</span>
-				 <input class="actual-text" ng-model="data['actual_foc']" id="{{data['ID']+'-foc'}}" type="text" value="{{data['actual_foc']}}"></td>
-				 <td ><span class="actual-text-clear">{{data['book_inf']}}</span>
-				 <input class="actual-text" ng-model="data['actual_inf']" id="{{data['ID']+'-inf'}}" type="text" value="{{data['actual_inf']}}"></td>
-				 <td ><span class="actual-text-clear">{{data['book_tg']}}</span>
-				 <input class="actual-text" ng-model="data['actual_tg']" id="{{data['ID']+'-tg'}}" type="text" value="{{data['actual_tg']}}"></td>
-			     <td ><span class="actual-text-clear">{{data['book_e']}}</span>
-				 <input class="actual-text" ng-model="data['actual_e']" id="{{data['ID']+'-e'}}" type="text" value="{{data['actual_e']}}"></td>
-				 <td ><span class="actual-text-clear">{{data['book_arrival']}}</span>
-				 <input class="actual-text" ng-model="data['actual_arrival']" id="{{data['ID']+'-arrival'}}" type="text" value="{{data['actual_arrival']}}"></td>
-				 <td ><span class="actual-text-clear">{{data['book_time']}}</span>
-				 <input class="actual-text" ng-model="data['actual_time']" id="{{data['ID']+'-time'}}" type="text" value="{{data['actual_time']}}"></td>
-				<td >
-					 <button class="button button-balanced icon ion-checkmark"  ng-click="copyData(data['ID'])"></button>
-					 <!--<button class="button button-assertive" ng-click="ctrl.add($index)"><ion-icon class="close-circle"></ion-icon></button>-->
-					 </td>
-				<td >{{data['resort_hotel']}}</td>
-				<td >{{data['unit']}}	</td>
-				<td >{{data['unit_atd']}}</td>
-				<td >{{data['driver']}}</td>				  
-				<td >{{data['coordinator']}}</td>
-				<td >{{data['sales_handle']}}</td>
-				<td >{{data['agency']}}</td>
-				<td >{{data['remarks']}}</td>
-				
-				</tr>
-		</tbody>
-	<table>	
-	<button class="button button-full button-positive"  ng-click="saveAll()">Submit</button>
-	<div/>
-  </ion-content>
-</ion-view>
+    <ion-content>
+        <!--<ion-list>
+          <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+            {{playlist.title}}
+          </ion-item>
+        </ion-list>-->
+
+        <div class="search-table-outter">
+
+            <table class="main-table" cellspacing="2" cellpadding="">
+
+                <thead>
+                    <tr class="head">
+                        <td  colspan="3">Details</td>
+                        <td colspan="8" class="text-center">Booked <br/>Actual</td>
+
+                        <td colspan="9" class="text-center">Information</td>
+
+                    </tr>
+                    <tr class="head">
+                        <td >Location</td>
+                        <td >CVNumber</td>
+                        <td >Account Name	</td>
+                        <td >A</td>
+                        <td >K</td>
+                        <td >FOC</td>
+                        <td >INF</td>
+                        <td >TG</td>
+                        <td >E</td>
+                        <td >ARRIVAL</td>
+                        <td >Time</td>
+
+                        <td >Sames as Booked?</td>
+
+
+                        <td >Resort Hotel</td>
+                        <td >Unit</td>
+                        <td >Unit ATD</td>
+                        <td >Driver</td>
+                        <td >Coordinator</td>
+                        <td >Sales Handle</td>
+                        <td >Agency</td>
+                        <td >Remarks</td>
+
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr class="result" ng-repeat="data in results">
+
+                        <td >{{data['location']}}</td>
+                        <td >{{data['cv_number']}}</td>
+                        <td >{{data['account_name']}}</td>
+                        <td >
+                            <span class="actual-text-clear">{{data['book_a']}}</span>
+                            <input class="actual-text" ng-model="data['actual_a']" ng-value="data['actual_a']" id="{{data['ID'] + '-a'}}" type="text"  value="{{data['actual_a']}}"></td>
+                        <td ><span class="actual-text-clear">{{data['book_k']}}</span>
+                            <input class="actual-text" ng-model="data['actual_k']" id="{{data['ID'] + '-k'}}" type="text" value="{{data['actual_k']}}"></td>
+                        <td ><span class="actual-text-clear">{{data['book_foc']}}</span>
+                            <input class="actual-text" ng-model="data['actual_foc']" id="{{data['ID'] + '-foc'}}" type="text" value="{{data['actual_foc']}}"></td>
+                        <td ><span class="actual-text-clear">{{data['book_inf']}}</span>
+                            <input class="actual-text" ng-model="data['actual_inf']" id="{{data['ID'] + '-inf'}}" type="text" value="{{data['actual_inf']}}"></td>
+                        <td ><span class="actual-text-clear">{{data['book_tg']}}</span>
+                            <input class="actual-text" ng-model="data['actual_tg']" id="{{data['ID'] + '-tg'}}" type="text" value="{{data['actual_tg']}}"></td>
+                        <td ><span class="actual-text-clear">{{data['book_e']}}</span>
+                            <input class="actual-text" ng-model="data['actual_e']" id="{{data['ID'] + '-e'}}" type="text" value="{{data['actual_e']}}"></td>
+                        <td ><span class="actual-text-clear">{{data['book_arrival']}}</span>
+                            <input class="actual-text" ng-model="data['actual_arrival']" id="{{data['ID'] + '-arrival'}}" type="text" value="{{data['actual_arrival']}}"></td>
+                        <td ><span class="actual-text-clear">{{data['book_time']}}</span>
+                            <input class="actual-text" ng-model="data['actual_time']" id="{{data['ID'] + '-time'}}" type="text" value="{{data['actual_time']}}"></td>
+                        <td >
+                            <button class="button button-balanced icon ion-checkmark"  ng-click="copyData(data['ID'])"></button>
+                            <!--<button class="button button-assertive" ng-click="ctrl.add($index)"><ion-icon class="close-circle"></ion-icon></button>-->
+                        </td>
+                        <td >{{data['resort_hotel']}}</td>
+                        <td >{{data['unit']}}	</td>
+                        <td >{{data['unit_atd']}}</td>
+                        <td >{{data['driver']}}</td>				  
+                        <td >{{data['coordinator']}}</td>
+                        <td >{{data['sales_handle']}}</td>
+                        <td >{{data['agency']}}</td>
+                        <td >{{data['remarks']}}</td>
+
+                    </tr>
+                </tbody>
+                <table>	
+                    <button class="button button-full button-positive"  ng-click="saveAll()">Submit</button>
+                    <div/>
+                    </ion-content>
+                    </ion-view>

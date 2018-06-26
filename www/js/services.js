@@ -1,7 +1,15 @@
 angular.module('app.services', [])
         .factory('DBA', function ($cordovaSQLite, $q, $ionicPlatform) {
             var self = this;
+            if (window.cordova) {
+                // App 
 
+                // db = $cordovaSQLite.openDB({ name: "ise.db", iosDatabaseLocation:'default'});
+
+            } else {
+                // browser
+                db = window.openDatabase("ise.db", '1', 'my', 1024 * 1024 * 100); // browser
+            }
             // Handle query's and potential errors
             self.query = function (query, parameters) {
                 parameters = parameters || [];
@@ -40,7 +48,7 @@ angular.module('app.services', [])
 
             return self;
         }).
-        factory('Users', function ($cordovaSQLite, DBA, $filter, $http) {
+        factory('Users', function ($cordovaSQLite, DBA, $filter, $http, $localStorage) {
             var self = this;
 
             self.all = function () {
@@ -57,12 +65,19 @@ angular.module('app.services', [])
                             return DBA.getById(result);
                         });
             }
+            self.getByUser = function (user) {
+                var parameters = [user];
+                return DBA.query("SELECT * FROM user WHERE username = (?)", parameters)
+                        .then(function (result) {
+                            return DBA.getById(result);
+                        });
+            }
 
             self.add = function (data) {
-           
-                
-                
-                console.log(data);
+
+
+
+
                 var parameters = data;
                 return DBA.query("INSERT INTO user (ID,username ,password ,complete_name ,status ,last_sync )\n\
                                                          VALUES (?,?,?,?,?,?)", parameters);
@@ -79,14 +94,15 @@ angular.module('app.services', [])
                 var parameters = [data.username, data.password];
 
 
+
                 return DBA.query("SELECT * FROM user WHERE username= (?) and password = (?)", parameters)
                         .then(function (result) {
 
-                            console.log(result);
+
                             var count = result.rows.length;
 
                             if (count != 0) {
-                                return  result.rows[0];
+                                return  DBA.getById(result);
                             } else {
 
                                 return false;
@@ -98,15 +114,21 @@ angular.module('app.services', [])
 
             return self;
         })
-        .factory('Book', function (DBA, $http, $rootScope, $localStorage, $ionicLoading) {
+        .factory('Book', function (DBA, $http, $rootScope, Users, $localStorage, $ionicLoading) {
             var self = this;
             var userId = $localStorage.userData.ID;
-        
+
+            self.all = function () {
+                return DBA.query("SELECT * FROM book")
+                        .then(function (result) {
+                            return DBA.getAll(result);
+                        });
+            }
             self.updateSync = function () {
 
-               var userServer = $localStorage.userData.serverUrl;
-           console.log($localStorage.userData);
-                $http.get('//'+userServer+'/?getBooking=' + userId).success(function (data) {
+                var userServer = $localStorage.serverUrl;
+                console.log('http://' + userServer + '/?getBooking=' + userId);
+                $http.get('http://' + userServer + '/?getBooking=' + userId).success(function (data) {
 
                     $rootScope.book = data;
                     self.removeALL();
@@ -128,8 +150,11 @@ angular.module('app.services', [])
                 var userId = $localStorage.userData.ID;
                 var param = [userId];
                 var items = [];
+
                 return DBA.query("SELECT * FROM book WHERE user = " + userId + "")
                         .then(function (result) {
+                            console.log("count = ")
+                            console.log(result);
                             if (result.rows.length > 0) {
                                 var itemsColl = [];
                                 for (var i = 0; i < result.rows.length; i++) {
@@ -180,6 +205,54 @@ angular.module('app.services', [])
 				  actual_time = (?)\n\
 				 WHERE id = (?)", parameters);
             }
+            self.syncUpBook = function (data) {
+                var userServer = $localStorage.serverUrl;
+                return $http({method: 'GET', url: 'http://' + userServer + '/?uploadBook=1', params : data});
+            }
+
+            return self;
+        })
+        .factory('Code', function (DBA, $http, $rootScope, Users, $localStorage, $ionicLoading) {
+            var self = this;
+
+
+
+
+            self.add = function (data) {
+
+                var parameters = data;
+                console.log("code insert");
+                console.log(parameters);
+
+                return DBA.query("INSERT INTO code  (ID ,userid, book_id,auth_code)\n\
+                                                         VALUES (?,?,?,?)", parameters);
+            }
+            self.removeALL = function () {
+                var parameters = [];
+                return DBA.query("DELETE FROM code", parameters);
+            }
+
+            self.get = function (id, auth_code) {
+                var parameters = [id, auth_code];
+                return DBA.query("SELECT * FROM code WHERE book_id = (?) and auth_code=(?)", parameters)
+                        .then(function (result) {
+                            return DBA.getById(result);
+                        });
+            }
+            self.checkCode = function (id, auth_code) {
+                var parameters = [id, auth_code];
+
+                return DBA.query("SELECT * FROM code WHERE book_id = (?) and auth_code= (?)", parameters)
+                        .then(function (result) {
+                            if (result.rows.length > 0) {
+                                return  DBA.getById(result);
+                            } else {
+                                return false;
+                            }
+
+                        });
+            }
+
 
 
             return self;
