@@ -193,7 +193,11 @@ angular.module('app.services', [])
                         });
             }
             self.update = function (data) {
+					console.log("actual");
+					console.log(data);
                 var parameters = [data.actual_a, data.actual_k, data.actual_foc, data.actual_inf, data.actual_tg, data.actual_e, data.actual_arrival, data.actual_time, data.ID];
+				console.log("param")
+				console.log(parameters)
                 return DBA.query("UPDATE book \n\
 				  SET actual_a = (?),\n\
 				  actual_k = (?),\n\

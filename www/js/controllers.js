@@ -79,19 +79,25 @@ angular.module('app.controllers', [])
 
                 angular.forEach($scope.results, function (value, key) {
                     console.log($scope.itemcount + "== " + $scope.crt + "--- actual_a" + value.actual_a)
-                    if ($scope.itemcount == $scope.crt) {
-
-
-                        $ionicLoading.hide();
-                        //location.reload();
-
-                    }
+					  
+                  
+         
                     Book.update(value).then(function (result) {
+						 $scope.crt++;
+							console.log($scope.crt);
+						
+						
+						  if ($scope.itemcount == $scope.crt) {
 
-                        $scope.crt++;
+
+							$ionicLoading.hide();
+							//location.reload();
+
+						}
 
                     });
 
+					
 
 
 
@@ -107,8 +113,9 @@ angular.module('app.controllers', [])
                 $ionicLoading.show({
                     template: 'Loading...',
                 });
+				
                 Book.get(data).then(function (result) {
-
+			
                     var a = document.getElementById(data + "-a");
                     var k = document.getElementById(data + "-k");
                     var foc = document.getElementById(data + "-foc");
@@ -141,16 +148,17 @@ angular.module('app.controllers', [])
                                 Code.checkCode(result.ID, res).then(function (result) {
 
                                     if (result != false) {
+										  
 
                                     } else {
-                                        document.getElementById(data + "-a").value = result.book_a;
-                                        document.getElementById(data + "-k").value = result.book_k;
-                                        document.getElementById(data + "-foc").value = result.book_foc;
-                                        document.getElementById(data + "-inf").value = result.book_inf;
-                                        document.getElementById(data + "-tg").value = result.book_tg;
-                                        document.getElementById(data + "-e").value = result.book_e;
-                                        document.getElementById(data + "-arrival").value = result.book_arrival;
-                                        document.getElementById(data + "-time").value = result.book_time;
+                                      $scope.results[data - 1].actual_a = result.book_a;
+						$scope.results[data - 1].actual_k = result.book_k;
+						$scope.results[data - 1 ].actual_foc = result.book_foc;
+						$scope.results[data - 1].actual_inf = result.book_inf;
+						$scope.results[data - 1].actual_tg = result.book_tg;
+						$scope.results[data - 1].actual_e = result.book_e
+						$scope.results[data - 1].actual_arrival = result.book_arrival;
+						$scope.results[data - 1].actual_time = result.book_time;
                                         var confirmPopup = $ionicPopup.confirm({
                                             scope: $scope,
                                             title: 'Error',
@@ -169,27 +177,39 @@ angular.module('app.controllers', [])
                                     }
                                 });
                             } else {
-                                document.getElementById(data + "-a").value = "";
-                                document.getElementById(data + "-k").value = "";
-                                document.getElementById(data + "-foc").value = "";
-                                document.getElementById(data + "-inf").value = "";
-                                document.getElementById(data + "-tg").value = "";
-                                document.getElementById(data + "-e").value = "";
-                                document.getElementById(data + "-arrival").value = "";
-                                document.getElementById(data + "-time").value = "";
+								
+                               $scope.results[data - 1].actual_a = "";
+						$scope.results[data - 1].actual_k = "";
+						$scope.results[data - 1 ].actual_foc = "";
+						$scope.results[data - 1].actual_inf = "";
+						$scope.results[data - 1].actual_tg = "";
+						$scope.results[data - 1].actual_e = "";
+						$scope.results[data - 1].actual_arrival = "";
+						$scope.results[data - 1].actual_time = "";
                             }
 
                         });
                     } else {
+						
                         console.log("update array")
-                        document.getElementById(data + "-a").value = result.book_a;
+						$scope.results[data - 1].actual_a = result.book_a;
+						$scope.results[data - 1].actual_k = result.book_k;
+						$scope.results[data - 1 ].actual_foc = result.book_foc;
+						$scope.results[data - 1].actual_inf = result.book_inf;
+						$scope.results[data - 1].actual_tg = result.book_tg;
+						$scope.results[data - 1].actual_e = result.book_e
+						$scope.results[data - 1].actual_arrival = result.book_arrival;
+						$scope.results[data - 1].actual_time = result.book_time;
+								
+								console.log($scope.results[data-1]);
+                       /* document.getElementById(data + "-a").value = result.book_a;
                         document.getElementById(data + "-k").value = result.book_k;
                         document.getElementById(data + "-foc").value = result.book_foc;
                         document.getElementById(data + "-inf").value = result.book_inf;
                         document.getElementById(data + "-tg").value = result.book_tg;
                         document.getElementById(data + "-e").value = result.book_e;
                         document.getElementById(data + "-arrival").value = result.book_arrival;
-                        document.getElementById(data + "-time").value = result.book_time;
+                        document.getElementById(data + "-time").value = result.book_time;*/
 
                     }
 
@@ -251,14 +271,17 @@ angular.module('app.controllers', [])
             }
 
             $scope.syncUpBook = function () {
-                /* $ionicLoading.show({
-                 template: 'Uploading data...',
-                 });*/
+				$scope.counter = 1;
+                 $ionicLoading.show({
+                 template: 'Uploading data ['+$scope.counter+']...',
+                 });
                 $scope.syncData = [];
+				
                 Book.getAll().then(function (result) {
 
                     $scope.results = angular.fromJson(result);
-
+					$scope.itemcount = Object.keys( $scope.results ).length;
+					
                     angular.forEach($scope.results, function (value, key) {
 
 
@@ -275,16 +298,30 @@ angular.module('app.controllers', [])
 
                         };
 
-
+		
                         Book.syncUpBook($scope.entry).success(function (response) {
                             console.log(response);
+							$scope.counter++;
+							if($scope.counter == $scope.itemcount){
+							 $ionicLoading.hide();
+							 $scope.syncBook();
+							 
+						}
                         }).error(function (error) {
                             console.log(error);
+							$scope.counter++;
+							if($scope.counter == $scope.itemcount){
+							 $ionicLoading.hide();
+							 $scope.syncBook();
+							 
+						}
                         });
+						console.log($scope.counter);
+						
 
                     });
 
-                    $ionicLoading.hide();
+                    
                 });
             }
             $scope.logout = function () {
@@ -306,7 +343,7 @@ angular.module('app.controllers', [])
 
             }
         })
-        .controller('LoginCtrl', function ($scope, Users, $location, $http, $localStorage, $ionicLoading, DBA, Code) {
+        .controller('LoginCtrl', function ($scope, Users, $location, $http, $localStorage, $ionicLoading, DBA, Code,$ionicPopup) {
             $scope.loginData = {username: 'admin', password: '123456', serverUrl: "test.islandstarexpress.net/isemobile"};
 
 
@@ -369,7 +406,24 @@ angular.module('app.controllers', [])
 
                 }).error(function (error) {
                     console.log(error);
+                    
                     $ionicLoading.hide()
+                    
+                     var confirmPopup = $ionicPopup.confirm({
+                                            scope: $scope,
+                                            title: 'Error',
+                                            template: ' Cant Connect to the server',
+                                            buttons: [
+
+                                                {
+                                                    text: '<b>Ok</b>',
+                                                    type: 'button-assertive',
+                                                    onTap: function (e) {
+
+                                                    }
+                                                }
+                                            ]
+                                        });
                 });
 
 
