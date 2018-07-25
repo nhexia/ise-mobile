@@ -25,6 +25,11 @@ document.addEventListener('deviceready', function () {
         }, function (tx, error) {
             console.log('SELECT error: ' + error.message);
         });
+        tx.executeSql(db_user_code, [], function (tx, rs) {
+            console.log('table created 2');
+        }, function (tx, error) {
+            console.log('SELECT error: ' + error.message);
+        });
     });
 });
 

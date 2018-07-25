@@ -93,8 +93,6 @@ angular.module('app.services', [])
 
                 var parameters = [data.username, data.password];
 
-
-
                 return DBA.query("SELECT * FROM user WHERE username= (?) and password = (?)", parameters)
                         .then(function (result) {
 
@@ -114,7 +112,7 @@ angular.module('app.services', [])
 
             return self;
         })
-        .factory('Book', function (DBA, $http, $rootScope, Users, $localStorage, $ionicLoading) {
+        .factory('Book', function (DBA, $http, $rootScope, Users, $localStorage, $ionicLoading,Code) {
             var self = this;
             var userId = $localStorage.userData.ID;
 
@@ -127,7 +125,7 @@ angular.module('app.services', [])
             self.updateSync = function () {
 
                 var userServer = $localStorage.serverUrl;
-                console.log('http://' + userServer + '/?getBooking=' + userId);
+               
                 $http.get('http://' + userServer + '/?getBooking=' + userId).success(function (data) {
 
                     $rootScope.book = data;
@@ -137,12 +135,26 @@ angular.module('app.services', [])
                         self.add(value)
                     })
 
-                    return true;
+                  
 
                 }).error(function (error) {
-                    return false;
+                 
 
                 });
+                
+                
+                  $http.get('http://' +userServer + '/?getCode=1').success(function (data, status) {
+                   
+
+                    angular.forEach(data, function (value, key) {
+                        Code.removeALL().then(function (result) {
+                            Code.add(value).then(function (result) {
+                              
+                            });
+                        });
+                    })
+
+                })
                 return true;
 
             }
@@ -225,8 +237,8 @@ angular.module('app.services', [])
             self.add = function (data) {
 
                 var parameters = data;
-                console.log("code insert");
-                console.log(parameters);
+           
+               
 
                 return DBA.query("INSERT INTO code  (ID ,userid, book_id,auth_code)\n\
                                                          VALUES (?,?,?,?)", parameters);
@@ -245,7 +257,8 @@ angular.module('app.services', [])
             }
             self.checkCode = function (id, auth_code) {
                 var parameters = [id, auth_code];
-
+                        console.log("code");
+                        console.log("ELECT * FROM code WHERE book_id = ("+id+") and auth_code= ("+auth_code+"");
                 return DBA.query("SELECT * FROM code WHERE book_id = (?) and auth_code= (?)", parameters)
                         .then(function (result) {
                             if (result.rows.length > 0) {
