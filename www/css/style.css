@@ -14,12 +14,13 @@
 }
 */
 body{
-	font-size:12px;
+    font-size:12px;
 }
 .main-table {
-	width:100%;
-	
-	order-collapse:collapse; 
+    width:100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
 }
 
 .main-table tr:nth-child(even) {
@@ -27,35 +28,40 @@ body{
 }
 
 tr{
-	
+
 }
 .head td{
-	padding:2px 6px;
-	border:solid 1px #999;
-	background-color:#002F3F ;
-	color:#fff;
-	vertical-align:middle;
+    padding:2px 6px;
+    border:solid 1px #999;
+    background-color:#002F3F ;
+    color:#fff;
+    vertical-align:middle;
 }
 .text-center{
-	text-align:center
+    text-align:center
 }
 .result td{
-	vertical-align:middle;
-	padding:2px 2px;
-	text-align:center;
-	border:solid 1px #999;
+    vertical-align:middle;
+    padding:2px 2px;
+    text-align:center;
+    border:solid 1px #999;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
+
 .actual-text{
-	
-	max-width:50px;
-	text-align:center;
-	padding:0 2px;
-	border:solid 1px #002F3F !important;
+
+    max-width:50px;
+    text-align:center;
+    padding:0 2px;
+    border:solid 1px #002F3F !important;
 }
 .actual-text-clear{
-	min-width:50px !important;
-	max-width:50px;
-	padding:6px 5px;
+    min-width:50px !important;
+    max-width:50px;
+    padding:6px 5px;
 
 }
 .logo{
@@ -67,11 +73,49 @@ tr{
 }
 
 .search-table-outter {
-	overflow-x:auto; }
+    overflow-x:auto; }
 th, td { 
-min-width: 60px;
- }
- .top-menu-img{
-	 
-	 width:260px;
- }
+    min-width: 60px;
+}
+.top-menu-img{
+
+    width:260px;
+}
+
+
+.headcol {
+    position: absolute;
+    width: 5em;
+    left: 0;
+    top: auto;
+    border-top-width: 1px;
+    /*only relevant for first row*/
+    margin-top: -1px;
+    /*compensate for top border*/
+}
+
+.td-fixed-margin {
+    margin-left: 80px;
+}
+.td-fixed-margin2 {
+    margin-left: 160px;
+}
+.td-fixed-padding {
+    padding-left: 31px;
+}
+.td-fixed {
+    position: fixed;
+    left: 0px;
+    width: 80px;
+    z-index: 1;
+    height: 670px;
+    word-wrap:break-word;
+}
+.td-a{
+    padding-left: 250px !important;
+    text-align: right !important;
+   
+}
+.gray-background {
+    background-color: #FEFEFE;
+}

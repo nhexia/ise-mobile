@@ -1,4 +1,4 @@
-<ion-view view-title="DAILY PASSENGER MANIFEST - ARRIVAL">
+<ion-view view-title="Manifest">
 
     <ion-content>
         <!--<ion-list>
@@ -33,10 +33,10 @@
 
                     </tr>
                     <tr class="head">
-                        <td >Location</td>
-                        <td >CVNumber</td>
-                        <td >Account Name	</td>
-                        <td >A</td>
+                        <td class="td-fixed">Location</td>
+                        <td class="td-fixed td-fixed-margin " >CV Number</td>
+                        <td class="td-fixed td-fixed-margin2 " >Account Name	</td>
+                        <td class="td-a" >A</td>
                         <td >K</td>
                         <td >FOC</td>
                         <td >INF</td>
@@ -66,10 +66,10 @@
 
                     <tr class="result" ng-repeat="data in results | filter:search_location">
 
-                        <td >{{data['location']}}</td>
-                        <td >{{data['cv_number']}}</td>
-                        <td >{{data['account_name']}}</td>
-                        <td >
+                        <td class="td-fixed gray-background">{{data['location']}}</td>
+                        <td class="td-fixed td-fixed-margin gray-background">{{data['cv_number']}}</td>
+                        <td class="td-fixed td-fixed-margin2 gray-background">{{data['account_name']}}</td>
+                        <td class="td-a">
                             <span class="actual-text-clear">{{data['book_a']}}</span>
                             <input class="actual-text" ng-model="data.actual_a" id="{{data['ID'] + '-a'}}" type="text"  ng-value="{{data.actual_a}}"></td>
                         <td ><span class="actual-text-clear">{{data['book_k']}}</span>

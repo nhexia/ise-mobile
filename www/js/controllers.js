@@ -12,35 +12,39 @@ angular.module('app.controllers', [])
 
             // Form data for the login modal
             $scope.loginData = {};
-
             // Create the login modal that we will use later
             $ionicModal.fromTemplateUrl('templates/login.html', {
                 scope: $scope
             }).then(function (modal) {
                 $scope.modal = modal;
             });
-
             // Triggered in the login modal to close it
             $scope.closeLogin = function () {
                 $scope.modal.hide();
             };
-
             // Open the login modal
             $scope.login = function () {
                 $scope.modal.show();
             };
-
             // Perform the login action when the user submits the login form
             $scope.doLogin = function () {
                 console.log('Doing login', $scope.loginData);
-
                 // Simulate a login delay. Remove this and replace with your login
                 // code if using a login system
                 $timeout(function () {
                     $scope.closeLogin();
                 }, 1000);
             };
-
+            $ionicModal.fromTemplateUrl('templates/entry_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+      
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+            $scope.showEntry = function () {
+                $scope.modal.show();
+            }
 
         })
 
@@ -48,12 +52,9 @@ angular.module('app.controllers', [])
             $scope.results = [];
             $ionicLoading.show({
                 template: 'Loading data...',
-
             });
             $scope.search_cv = "";
             $scope.search_location = "";
-
-
             $scope.getDataBooking = function () {
                 $scope.result = Book.updateSync();
                 if ($scope.result)
@@ -62,27 +63,18 @@ angular.module('app.controllers', [])
                         //console.log(result);
 
                         $scope.results = angular.fromJson(result);
-
-
                         $ionicLoading.hide();
                     });
             }
             setTimeout(function () {
                 $scope.getDataBooking();
             }, 8000);
-
-
-
-
             $scope.saveAll = function () {
                 $ionicLoading.show({
                     template: 'Saving data...',
-
                 });
-
                 $scope.crt = 1;
                 $scope.itemcount = Object.keys($scope.results).length;
-
                 angular.forEach($scope.results, function (value, key) {
                     console.log($scope.itemcount + "== " + $scope.crt + "--- actual_a" + value.actual_a)
 
@@ -91,8 +83,6 @@ angular.module('app.controllers', [])
                     Book.update(value).then(function (result) {
                         $scope.crt++;
                         console.log($scope.crt);
-
-
                         if ($scope.itemcount == $scope.crt) {
 
 
@@ -102,16 +92,7 @@ angular.module('app.controllers', [])
                         }
 
                     });
-
-
-
-
-
-
-
                 });
-
-
             }
 
 
@@ -119,7 +100,6 @@ angular.module('app.controllers', [])
                 $ionicLoading.show({
                     template: 'Loading...',
                 });
-
                 Book.get(data).then(function (result) {
 
                     var a = document.getElementById(data + "-a");
@@ -130,9 +110,7 @@ angular.module('app.controllers', [])
                     var e = document.getElementById(data + "-e");
                     var arrival = document.getElementById(data + "-arrival");
                     var time = document.getElementById(data + "-time");
-
                     var userId = $localStorage.userData.ID;
-
                     if (
                             (a.value != result.book_a && a.value != "") ||
                             (k.value != result.book_k && k.value != "") ||
@@ -209,7 +187,6 @@ angular.module('app.controllers', [])
                         $scope.results[data - 1].actual_e = result.book_e
                         $scope.results[data - 1].actual_arrival = result.book_arrival;
                         $scope.results[data - 1].actual_time = result.book_time;
-
                         // console.log($scope.results[data - 1]);
                         /* document.getElementById(data + "-a").value = result.book_a;
                          document.getElementById(data + "-k").value = result.book_k;
@@ -225,20 +202,14 @@ angular.module('app.controllers', [])
                     $ionicLoading.hide();
                 })
             }
-
-
-
         })
         .controller('SettingCtrl', function ($scope, $location, $ionicLoading, $ionicPopup, $localStorage, $state, Book, Users, Code, $http) {
             $scope.serverUrl = "";
-
-
             $scope.syncBook = function () {
                 $ionicLoading.show({
                     template: 'Updating data...',
                 });
                 var userServer = $localStorage.serverUrl;
-
                 $scope.result = Book.updateSync();
                 var counter = 0;
                 $scope.itemcount = 0;
@@ -277,12 +248,10 @@ angular.module('app.controllers', [])
                     template: 'Uploading data ...',
                 });
                 $scope.syncData = [];
-
                 Book.getAll().then(function (result) {
 
                     $scope.results = angular.fromJson(result);
                     $scope.itemcount = Object.keys($scope.results).length;
-
                     angular.forEach($scope.results, function (value, key) {
 
 
@@ -296,10 +265,7 @@ angular.module('app.controllers', [])
                             actual_e: value.actual_e,
                             actual_arrival: value.actual_arrival,
                             actual_time: value.actual_time,
-
                         };
-
-
                         Book.syncUpBook($scope.entry).success(function (response) {
 
                             $scope.counter++;
@@ -313,7 +279,6 @@ angular.module('app.controllers', [])
                                     console.log("Code remove")
                                     console.log(result)
                                 });
-
                                 var confirmPopup = $ionicPopup.confirm({
                                     scope: $scope,
                                     title: 'Notification',
@@ -329,22 +294,14 @@ angular.module('app.controllers', [])
                                         }
                                     ]
                                 });
-
-
-
                             }
                         }).error(function (error) {
                             console.log(error);
                             $scope.counter++;
                             $ionicLoading.hide();
-
                         });
                         console.log($scope.counter);
-
-
                     });
-
-
                 });
             }
             $scope.logout = function () {
@@ -362,35 +319,24 @@ angular.module('app.controllers', [])
                         $state.go('login');
                     }
                 });
-
-
             }
         })
         .controller('LoginCtrl', function ($scope, Users, $location, $http, $localStorage, $ionicLoading, DBA, Code, $ionicPopup) {
             $scope.loginData = {username: 'admin', password: '123456', serverUrl: "test.islandstarexpress.net/isemobile"};
-
-
-
             if ($localStorage.userData) {
                 $location.path('/app/manifest');
             }
 
 
             $scope.error = {};
-
-
             $scope.loginMe = function () {
                 $ionicLoading.show({
                     template: 'Loading...',
-
                 }).then(function () {
                     console.log("Checking user data...");
                 });
-
-
                 $http.get('http://' + $scope.loginData.serverUrl + '/?getUser=1').success(function (data, status) {
                     $scope.users = data;
-
                     angular.forEach($scope.users, function (value, key) {
 
 
@@ -403,15 +349,10 @@ angular.module('app.controllers', [])
 
                                 $ionicLoading.hide();
                             });
-
-
                         });
-
-
                     })
                     $http.get('http://' + $scope.loginData.serverUrl + '/?getCode=1').success(function (data, status) {
                         $scope.users = data;
-
                         angular.forEach($scope.users, function (value, key) {
                             Code.removeALL().then(function (result) {
                                 Code.add(value).then(function (result) {
@@ -424,7 +365,6 @@ angular.module('app.controllers', [])
 
                     }).error(function (error) {
                         console.log(error);
-
                         $ionicLoading.hide()
 
                         var confirmPopup = $ionicPopup.confirm({
@@ -443,31 +383,23 @@ angular.module('app.controllers', [])
                             ]
                         });
                     });
-
                 }).error(function (error) {
                     console.log(error);
                     $ionicLoading.hide()
                 });
-
-
                 setTimeout(function () {
 
 
                     var parameters = [$scope.loginData.username, $scope.loginData.password];
-
                     Users.login($scope.loginData).then(function (result) {
                         console.log("result : login");
                         console.log(result);
-
                         if (result != false) {
                             $scope.error[0] = "";
                             $scope.error[1] = "";
                             $localStorage.serverUrl = $scope.loginData['serverUrl'];
                             $localStorage.ID = result[0];
-
-
                             $localStorage.userData = result;
-
                             $location.path('/app/manifest');
                         } else {
 
