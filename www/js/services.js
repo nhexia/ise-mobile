@@ -112,7 +112,7 @@ angular.module('app.services', [])
 
             return self;
         })
-        .factory('Book', function (DBA, $http, $rootScope, Users, $localStorage, $ionicLoading,Code) {
+        .factory('Book', function (DBA, $http, $rootScope, Users, $localStorage, $ionicLoading, Code) {
             var self = this;
             var userId = $localStorage.userData.ID;
 
@@ -125,7 +125,7 @@ angular.module('app.services', [])
             self.updateSync = function () {
 
                 var userServer = $localStorage.serverUrl;
-               
+
                 $http.get('http://' + userServer + '/?getBooking=' + userId).success(function (data) {
 
                     $rootScope.book = data;
@@ -135,21 +135,21 @@ angular.module('app.services', [])
                         self.add(value)
                     })
 
-                  
+
 
                 }).error(function (error) {
-                 
+
 
                 });
-                
-                
-                  $http.get('http://' +userServer + '/?getCode=1').success(function (data, status) {
-                   
+
+
+                $http.get('http://' + userServer + '/?getCode=1').success(function (data, status) {
+
 
                     angular.forEach(data, function (value, key) {
                         Code.removeALL().then(function (result) {
                             Code.add(value).then(function (result) {
-                              
+
                             });
                         });
                     })
@@ -192,6 +192,17 @@ angular.module('app.services', [])
                                                      resort_hotel, unit, unit_atd, driver, coordinator, sales_handle, agency, remarks, user )\n\
                                                          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", parameters);
             }
+
+            self.addLocal = function (data) {
+
+                var parameters = data;
+                console.log(data);
+
+                return DBA.query("INSERT INTO book ( location, cv_number, account_name, book_a, book_k, book_foc, book_inf, book_tg, book_e,\n\
+                                                     book_arrival, book_time, actual_a, actual_k, actual_foc, actual_inf, actual_tg, actual_e, actual_arrival, actual_time,\n\
+                                                     resort_hotel, unit, unit_atd, driver, coordinator, sales_handle, agency, remarks, user )\n\
+                                                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", parameters);
+            }
             self.removeALL = function () {
                 var parameters = [];
                 return DBA.query("DELETE FROM book", parameters);
@@ -205,11 +216,11 @@ angular.module('app.services', [])
                         });
             }
             self.update = function (data) {
-					console.log("actual");
-					console.log(data);
+                console.log("actual");
+                console.log(data);
                 var parameters = [data.actual_a, data.actual_k, data.actual_foc, data.actual_inf, data.actual_tg, data.actual_e, data.actual_arrival, data.actual_time, data.ID];
-				console.log("param")
-				console.log(parameters)
+                console.log("param")
+                console.log(parameters)
                 return DBA.query("UPDATE book \n\
 				  SET actual_a = (?),\n\
 				  actual_k = (?),\n\
@@ -223,7 +234,7 @@ angular.module('app.services', [])
             }
             self.syncUpBook = function (data) {
                 var userServer = $localStorage.serverUrl;
-                return $http({method: 'GET', url: 'http://' + userServer + '/?uploadBook=1', params : data});
+                return $http({method: 'GET', url: 'http://' + userServer + '/?uploadBook=1', params: data});
             }
 
             return self;
@@ -232,16 +243,18 @@ angular.module('app.services', [])
             var self = this;
 
 
+            self.updateStatus = function (data) {
+                var id = [data];
+                console.log("UPDATE code SET status = 1 WHERE ID = ('"+data+"')")
 
+                 DBA.query("UPDATE code SET status = 1 WHERE ID = (?)", id);
+            }
 
             self.add = function (data) {
 
                 var parameters = data;
-           
-               
-
-                return DBA.query("INSERT INTO code  (ID ,userid, book_id,auth_code)\n\
-                                                         VALUES (?,?,?,?)", parameters);
+                return DBA.query("INSERT INTO code  (ID ,userid, book_id,auth_code,status)\n\
+                                                         VALUES (?,?,?,?,?)", parameters);
             }
             self.removeALL = function () {
                 var parameters = [];
@@ -257,8 +270,8 @@ angular.module('app.services', [])
             }
             self.checkCode = function (id, auth_code) {
                 var parameters = [id, auth_code];
-                        console.log("code");
-                        console.log("ELECT * FROM code WHERE book_id = ("+id+") and auth_code= ("+auth_code+"");
+                console.log("code");
+                console.log("SELECT * FROM code WHERE book_id = (" + id + ") and auth_code= (" + auth_code + ")");
                 return DBA.query("SELECT * FROM code WHERE book_id = (?) and auth_code= (?)", parameters)
                         .then(function (result) {
                             if (result.rows.length > 0) {

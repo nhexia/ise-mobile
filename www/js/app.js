@@ -12,7 +12,7 @@ document.addEventListener('deviceready', function () {
     
     var db_user_create = "CREATE TABLE IF NOT EXISTS user (ID interger primary key,username text,password text,complete_name text,status interger,last_sync text)";
     var db_user_book = "CREATE TABLE IF NOT EXISTS  book (ID text primary key ,location text ,cv_number text ,account_name text ,book_a text ,book_k text ,book_foc text ,book_inf text ,book_tg text ,book_e text ,book_arrival text ,book_time text ,actual_a text ,actual_k text ,actual_foc text ,actual_inf text ,actual_tg text ,actual_e text ,actual_arrival text ,actual_time text ,resort_hotel text ,unit text ,unit_atd text ,driver text ,coordinator text ,sales_handle text ,agency text ,remarks text ,user text,status interger )";
-    var db_user_code = "CREATE TABLE IF NOT EXISTS  code (ID text primary key ,userid text, book_id,auth_code)";
+    var db_user_code = "CREATE TABLE IF NOT EXISTS  code (ID text primary key ,userid text, book_id,auth_code,status)";
 
 
     db.transaction(function (tx) {
@@ -64,7 +64,7 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.services', 'ngCordov
 
                 var db_user_create = "CREATE TABLE IF NOT EXISTS user (ID interger primary key,username text,password text,complete_name text,status interger,last_sync text)";
                 var db_user_book = "CREATE TABLE IF NOT EXISTS  book (ID text primary key ,location text ,cv_number text ,account_name text ,book_a text ,book_k text ,book_foc text ,book_inf text ,book_tg text ,book_e text ,book_arrival text ,book_time text ,actual_a text ,actual_k text ,actual_foc text ,actual_inf text ,actual_tg text ,actual_e text ,actual_arrival text ,actual_time text ,resort_hotel text ,unit text ,unit_atd text ,driver text ,coordinator text ,sales_handle text ,agency text ,remarks text ,user text,status interger )";
-                var db_user_code = "CREATE TABLE IF NOT EXISTS  code (ID text primary key ,userid text, book_id,auth_code)";
+                var db_user_code = "CREATE TABLE IF NOT EXISTS  code (ID text primary key ,userid text, book_id,auth_code,status)";
                 /*$cordovaSQLite.execute(db, db_user_create, []).then(function (res) {
                  console.log("database user created");
                  }, function (err) {

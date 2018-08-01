@@ -8,15 +8,15 @@
         </ion-list>-->
 
         <div class="search-table-outter">
-          
-            
+
+
 
             <div class="list">
 
                 <div class="item item-input-inset">
                     <h3>Search : </h3>
                     <label class="item-input-wrapper">
-                          <input type="text" ng-model="search_location">
+                        <input type="text" ng-model="search_location">
                     </label>&nbsp;
 
                 </div>
@@ -26,10 +26,10 @@
 
                 <thead>
                     <tr class="head">
-                        <td  colspan="3">Details</td>
-                        <td colspan="8" class="text-center">Booked <br/>Actual</td>
+                       
+                        <td colspan="8" class="text-center">Booked /Actual</td>
 
-                        <td colspan="9" class="text-center">Information</td>
+                        <td colspan="10" class="text-center">Information</td>
 
                     </tr>
                     <tr class="head">
@@ -44,10 +44,6 @@
                         <td >E</td>
                         <td >ARRIVAL</td>
                         <td >Time</td>
-
-                        <td >Sames as Booked?</td>
-
-
                         <td >Resort Hotel</td>
                         <td >Unit</td>
                         <td >Unit ATD</td>
@@ -55,7 +51,9 @@
                         <td >Coordinator</td>
                         <td >Sales Handle</td>
                         <td >Agency</td>
-                        <td >Remarks</td>
+                        <td style="width: 400px">Remarks</td>
+                        <td >Sames as Booked?</td>
+
 
 
                     </tr>
@@ -64,7 +62,7 @@
 
                 <tbody>
 
-                    <tr class="result" ng-repeat="data in results | filter:search_location">
+                    <tr class="result" ng-repeat="data in results| filter:search_location">
 
                         <td class="td-fixed gray-background">{{data['location']}}</td>
                         <td class="td-fixed td-fixed-margin gray-background">{{data['cv_number']}}</td>
@@ -86,18 +84,40 @@
                             <input class="actual-text" ng-model="data.actual_arrival" id="{{data['ID'] + '-arrival'}}" type="text" value="{{data.actual_arrival}}"></td>
                         <td ><span class="actual-text-clear">{{data['book_time']}}</span>
                             <input class="actual-text" ng-model="data.actual_time" id="{{data['ID'] + '-time'}}" type="text" value="{{data.actual_time}}"></td>
+
+                        <td >
+                            <input class="actual-text2" ng-model="data.resort_hotel" id="{{data['ID'] + '-resort_hotel'}}" type="text" value="{{data.resort_hotel}}"></td>
+                        <!-- <td >
+                             <td >{{data['resort_hotel']}}</td>-->
+                        <td >
+                            <input class="actual-text2" ng-model="data.unit" id="{{data['ID'] + '-unit'}}" type="text" value="{{data.unit}}"></td>
+
+                        <td >
+                            <input class="actual-text2" ng-model="data.unit_atd" id="{{data['ID'] + '-unit_atd'}}" type="text" value="{{data.unit_atd}}"></td>
+
+                        <td >
+                            <input class="actual-text2" ng-model="data.driver" id="{{data['ID'] + '-driver'}}" type="text" value="{{data.driver}}"></td>
+
+                        <td >
+                            <input class="actual-text2" ng-model="data.coordinator" id="{{data['ID'] + '-coordinator'}}" type="text" value="{{data.coordinator}}"></td>
+
+                        <!--<td >{{data['unit']}}	</td>
+                        <td >{{data['unit_atd']}}</td>
+                        <td >{{data['driver']}}</td>				  
+                        <td >{{data['coordinator']}}</td>-->
+
+                        <td >{{data['sales_handle']}}</td>
+                        <td >{{data['agency']}}</td>
+                        <td >
+                            <textarea cols="40" rows="2" style="width:100%" class="actual-text2" ng-model="data.remarks" id="{{data['ID'] + '-remarks'}}" type="text" value="{{data.remarks}}"></textarea>
+                        </td>
+
+                        <!-- <td >{{data['remarks']}}</td>-->
+
                         <td >
                             <button class="button button-balanced icon ion-checkmark"  ng-click="copyData(data['ID'])"></button>
                             <!--<button class="button button-assertive" ng-click="ctrl.add($index)"><ion-icon class="close-circle"></ion-icon></button>-->
                         </td>
-                        <td >{{data['resort_hotel']}}</td>
-                        <td >{{data['unit']}}	</td>
-                        <td >{{data['unit_atd']}}</td>
-                        <td >{{data['driver']}}</td>				  
-                        <td >{{data['coordinator']}}</td>
-                        <td >{{data['sales_handle']}}</td>
-                        <td >{{data['agency']}}</td>
-                        <td >{{data['remarks']}}</td>
 
                     </tr>
                 </tbody>

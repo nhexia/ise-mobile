@@ -26,7 +26,10 @@ body{
 .main-table tr:nth-child(even) {
     background-color: #D6EDF3
 }
-
+textarea{
+    width:300px !important;
+    border: solid 1px #333;
+}
 tr{
 
 }
@@ -58,6 +61,16 @@ tr{
     padding:0 2px;
     border:solid 1px #002F3F !important;
 }
+
+.actual-text2{
+
+    max-width:150px;
+    text-align:center;
+    padding:0 2px;
+    border:solid 1px #002F3F !important;
+}
+
+
 .actual-text-clear{
     min-width:50px !important;
     max-width:50px;

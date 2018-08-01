@@ -1,7 +1,7 @@
 angular.module('app.controllers', [])
 
 
-        .controller('AppCtrl', function ($scope, $ionicModal, $timeout, $http, Users, $localStorage) {
+        .controller('AppCtrl', function ($scope, $ionicModal, $timeout, $http, Users, $localStorage, $rootScope, Book, $ionicLoading, $ionicPopup) {
 
             // With the new view caching in Ionic, Controllers are only called
             // when they are recreated or on app start, instead of every page change.
@@ -35,17 +35,104 @@ angular.module('app.controllers', [])
                     $scope.closeLogin();
                 }, 1000);
             };
+
+            /* add modal*/
+
+            $rootScope.entry = {
+                location: '',
+                cv_number: '',
+                account_name: '',
+                book_a: '',
+                book_k: '',
+                book_foc: '',
+                book_inf: '',
+                book_tg: '',
+                book_e: '',
+                book_arrival: '',
+                book_time: '',
+                driver: '',
+                coordinator: '',
+                unit: '',
+                resort_hotel: '',
+                agency: '',
+                remarks: '',
+
+            };
+
             $ionicModal.fromTemplateUrl('templates/entry_modal.html', {
                 scope: $scope,
                 animation: 'slide-in-up',
-      
+
             }).then(function (modal) {
                 $scope.modal = modal;
             });
             $scope.showEntry = function () {
                 $scope.modal.show();
+
             }
 
+            $scope.hideModal = function () {
+                $scope.modal.hide();
+            }
+            $scope.saveBooking = function () {
+                $ionicLoading.show({
+                    template: 'Saving data...',
+                });
+                var userId = $localStorage.userData.ID;
+                console.log($rootScope.userid);
+                $scope.toAdd = [
+                    $rootScope.entry.location,
+                    $rootScope.entry.cv_number,
+                    $rootScope.entry.account_name,
+                    $rootScope.entry.book_a,
+                    $rootScope.entry.book_k,
+                    $rootScope.entry.book_foc,
+                    $rootScope.entry.book_inf,
+                    $rootScope.entry.book_tg,
+                    $rootScope.entry.book_e,
+                    $rootScope.entry.book_arrival,
+                    $rootScope.entry.book_time,
+                    $rootScope.entry.book_a,
+                    $rootScope.entry.book_k,
+                    $rootScope.entry.book_foc,
+                    $rootScope.entry.book_inf,
+                    $rootScope.entry.book_tg,
+                    $rootScope.entry.book_e,
+                    $rootScope.entry.book_arrival,
+                    $rootScope.entry.book_time,
+                    $rootScope.entry.resort_hotel,
+                    $rootScope.entry.unit,
+                    '',
+                    $rootScope.entry.driver,
+                    $rootScope.entry.coordinator,
+                    '',
+                    '',
+                    $rootScope.entry.remarks,
+                    userId
+
+                ];
+
+                Book.addLocal($scope.toAdd).then(function (result) {
+                    $ionicLoading.hide();
+
+                    var confirmPopup = $ionicPopup.confirm({
+                        scope: $scope,
+                        title: 'Success',
+                        template: 'Saving data success.',
+                        buttons: [
+
+                            {
+                                text: '<b>Done</b>',
+                                type: 'button-balanced',
+                                onTap: function (e) {
+
+                                    $scope.modal.hide();
+                                }
+                            }
+                        ]
+                    });
+                });
+            }
         })
 
         .controller('ManifestCtrl', function ($ionicLoading, $scope, $location, $localStorage, $state, Book, $ionicPopup, Code) {
@@ -68,7 +155,7 @@ angular.module('app.controllers', [])
             }
             setTimeout(function () {
                 $scope.getDataBooking();
-            }, 8000);
+            }, 5000);
             $scope.saveAll = function () {
                 $ionicLoading.show({
                     template: 'Saving data...',
@@ -111,6 +198,8 @@ angular.module('app.controllers', [])
                     var arrival = document.getElementById(data + "-arrival");
                     var time = document.getElementById(data + "-time");
                     var userId = $localStorage.userData.ID;
+
+
                     if (
                             (a.value != result.book_a && a.value != "") ||
                             (k.value != result.book_k && k.value != "") ||
@@ -131,10 +220,16 @@ angular.module('app.controllers', [])
                             if (res) {
                                 Code.checkCode(result.ID, res).then(function (result) {
                                     console.log("code");
-                                    console.log(result)
-                                    if (result != false) {
 
+
+                                    if (result != false && result.status != 1) {
                                         $ionicLoading.hide()
+
+                                        Code.updateStatus(result.ID);
+
+                                         
+
+
 
                                     } else {
                                         $scope.results[data - 1].actual_a = result.book_a;
@@ -148,7 +243,7 @@ angular.module('app.controllers', [])
                                         var confirmPopup = $ionicPopup.confirm({
                                             scope: $scope,
                                             title: 'Error',
-                                            template: ' Invalid code ',
+                                            template: 'Code invalid or already been used',
                                             buttons: [
 
                                                 {
