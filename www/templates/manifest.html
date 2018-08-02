@@ -104,10 +104,14 @@
                         <!--<td >{{data['unit']}}	</td>
                         <td >{{data['unit_atd']}}</td>
                         <td >{{data['driver']}}</td>				  
-                        <td >{{data['coordinator']}}</td>-->
+                        <td >{{data['coordinator']}}</td>
 
                         <td >{{data['sales_handle']}}</td>
-                        <td >{{data['agency']}}</td>
+                        <td >{{data['agency']}}</td>-->
+                         <td >
+                            <input class="actual-text2" ng-model="data.sales_handle" id="{{data['ID'] + '-sales_handle'}}" type="text" value="{{data.sales_handle}}"></td>
+                          <td >
+                            <input class="actual-text2" ng-model="data.agency" id="{{data['ID'] + '-agency'}}" type="text" value="{{data.agency}}"></td>
                         <td >
                             <textarea cols="40" rows="2" style="width:100%" class="actual-text2" ng-model="data.remarks" id="{{data['ID'] + '-remarks'}}" type="text" value="{{data.remarks}}"></textarea>
                         </td>
@@ -115,7 +119,7 @@
                         <!-- <td >{{data['remarks']}}</td>-->
 
                         <td >
-                            <button class="button button-balanced icon ion-checkmark"  ng-click="copyData(data['ID'])"></button>
+                            <button class="button button-balanced icon ion-checkmark"  ng-click="copyData(data)"></button>
                             <!--<button class="button button-assertive" ng-click="ctrl.add($index)"><ion-icon class="close-circle"></ion-icon></button>-->
                         </td>
 

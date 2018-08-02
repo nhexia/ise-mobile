@@ -181,6 +181,31 @@ angular.module('app.services', [])
                             }
                         });
             }
+            self.getAllUpdated = function () {
+                var userId = $localStorage.userData.ID;
+                var param = [userId];
+                var items = [];
+
+                return DBA.query("SELECT * FROM book WHERE user = " + userId + " and status in (1,1.0)")
+                        .then(function (result) {
+                            console.log("count = ")
+                            console.log(result);
+                            if (result.rows.length > 0) {
+                                var itemsColl = [];
+                                for (var i = 0; i < result.rows.length; i++) {
+                                    itemsColl[i] = result.rows.item(i);
+
+                                }
+                                ;
+
+                                items = JSON.stringify(itemsColl);
+
+                                return items;
+                            }else{
+                                return false;
+                            }
+                        });
+            }
 
             self.add = function (data) {
 
@@ -200,8 +225,8 @@ angular.module('app.services', [])
 
                 return DBA.query("INSERT INTO book ( location, cv_number, account_name, book_a, book_k, book_foc, book_inf, book_tg, book_e,\n\
                                                      book_arrival, book_time, actual_a, actual_k, actual_foc, actual_inf, actual_tg, actual_e, actual_arrival, actual_time,\n\
-                                                     resort_hotel, unit, unit_atd, driver, coordinator, sales_handle, agency, remarks, user )\n\
-                                                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", parameters);
+                                                     resort_hotel, unit, unit_atd, driver, coordinator, sales_handle, agency, remarks, user,status )\n\
+                                                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", parameters);
             }
             self.removeALL = function () {
                 var parameters = [];
@@ -218,7 +243,25 @@ angular.module('app.services', [])
             self.update = function (data) {
                 console.log("actual");
                 console.log(data);
-                var parameters = [data.actual_a, data.actual_k, data.actual_foc, data.actual_inf, data.actual_tg, data.actual_e, data.actual_arrival, data.actual_time, data.ID];
+                var parameters = [
+                    data.actual_a,
+                    data.actual_k, 
+                    data.actual_foc, 
+                    data.actual_inf, 
+                    data.actual_tg,
+                    data.actual_e,
+                    data.actual_arrival, 
+                    data.actual_time,
+                    data.resort_hotel,
+                    data.unit,
+                    data.unit_atd,
+                    data.driver,
+                    data.coordinator,
+                    data.sales_handle,
+                    data.agency,
+                    data.remarks,
+                    1,
+                    data.ID];
                 console.log("param")
                 console.log(parameters)
                 return DBA.query("UPDATE book \n\
@@ -229,7 +272,16 @@ angular.module('app.services', [])
 				  actual_tg = (?),\n\
 				  actual_e = (?),\n\
 				  actual_arrival = (?),\n\
-				  actual_time = (?)\n\
+				  actual_time = (?),\n\
+				  resort_hotel = (?),\n\
+				  unit = (?),\n\
+				  unit_atd = (?),\n\
+				  driver = (?),\n\
+				  coordinator = (?),\n\
+                                  sales_handle = (?),\n\
+                                  agency = (?),\n\
+                                  remarks = (?),\n\
+                                  status = (?)\n\
 				 WHERE id = (?)", parameters);
             }
             self.syncUpBook = function (data) {
@@ -245,9 +297,9 @@ angular.module('app.services', [])
 
             self.updateStatus = function (data) {
                 var id = [data];
-                console.log("UPDATE code SET status = 1 WHERE ID = ('"+data+"')")
+                console.log("UPDATE code SET status = 1 WHERE ID = ('" + data + "')")
 
-                 DBA.query("UPDATE code SET status = 1 WHERE ID = (?)", id);
+                DBA.query("UPDATE code SET status = 1 WHERE ID = (?)", id);
             }
 
             self.add = function (data) {
@@ -268,6 +320,30 @@ angular.module('app.services', [])
                             return DBA.getById(result);
                         });
             }
+            self.getUpdated = function () {
+                var parameters = [];
+                    var items = [];
+                return DBA.query("SELECT * FROM code WHERE status = 1 ")
+                        .then(function (result) {
+                            console.log("count = ")
+                            console.log(result);
+                            if (result.rows.length > 0) {
+                                var itemsColl = [];
+                                for (var i = 0; i < result.rows.length; i++) {
+                                    itemsColl[i] = result.rows.item(i);
+
+                                }
+                                ;
+
+                                items = JSON.stringify(itemsColl);
+
+                                return items;
+                            }else{
+                                return false;
+                            }
+                        });
+
+            }
             self.checkCode = function (id, auth_code) {
                 var parameters = [id, auth_code];
                 console.log("code");
@@ -281,6 +357,10 @@ angular.module('app.services', [])
                             }
 
                         });
+            }
+            self.syncUpCode = function (data) {
+                var userServer = $localStorage.serverUrl;
+                return $http({method: 'GET', url: 'http://' + userServer + '/?uploadCode=1', params: data});
             }
 
 

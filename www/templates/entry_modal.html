@@ -1,0 +1,101 @@
+<ion-modal-view>
+    <ion-header-bar>
+
+    </ion-header-bar>
+    <ion-header-bar align-title="left" class="bar-positive">
+
+        <h1 class="title">Booking Entry</h1>
+        <div class="buttons">
+            <button class="button" ng-click="modal.hide()">Close</button>
+        </div>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input type="text" ng-model="entry.location" placeholder="Location">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.cv_number" placeholder="CV Number">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.account_name"  placeholder="Account Name">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.book_a"  placeholder="A">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.book_k"  placeholder="K">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.book_foc"  placeholder=" FOC">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.book_inf"  placeholder="INF">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.book_tg"  placeholder="TG">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.book_e"  placeholder="E">
+            </label> 
+            <label class="item item-input">
+                <input type="text" ng-model="entry.book_arrival"  placeholder="Actual Arrival">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.book_time"  placeholder="Actual Time">
+            </label>
+             <label class="item item-input">
+                <input type="text" ng-model="entry.actual_a"  placeholder="A">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.actual_k"  placeholder="K">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.actual_foc"  placeholder=" FOC">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.actual_inf"  placeholder="INF">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.actual_tg"  placeholder="TG">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.actual_e"  placeholder="E">
+            </label> 
+            <label class="item item-input">
+                <input type="text" ng-model="entry.actual_arrival"  placeholder="Actual Arrival">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.actual_time"  placeholder="Actual Time">
+            </label>
+
+            <label class="item item-input">
+                <input type="text" ng-model="entry.driver"  placeholder="Driver">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.coordinator"  placeholder="Coordinator">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.sales_handle"  placeholder="Unit">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.unit"  placeholder="Unit">
+            </label>
+             <label class="item item-input">
+                <input type="text" ng-model="entry.unit_atd"  placeholder="Unit">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.resort_hotel"  placeholder="Resort Hotel">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.agency"  placeholder="Agency">
+            </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.remarks"  placeholder="Remarks">
+            </label>
+            <button class="button button-block button-positive" ng-click="saveBooking()">Submit</button>
+        </div>
+    </ion-content>
+
+
+</ion-modal-view>

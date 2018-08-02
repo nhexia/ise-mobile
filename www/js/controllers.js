@@ -102,13 +102,14 @@ angular.module('app.controllers', [])
                     $rootScope.entry.book_time,
                     $rootScope.entry.resort_hotel,
                     $rootScope.entry.unit,
-                    '',
+                    $rootScope.entry.unit_atd,
                     $rootScope.entry.driver,
                     $rootScope.entry.coordinator,
-                    '',
-                    '',
+                    $rootScope.entry.sales_handle,
+                    $rootScope.entry.agency,
                     $rootScope.entry.remarks,
-                    userId
+                    userId,
+                    1
 
                 ];
 
@@ -184,19 +185,24 @@ angular.module('app.controllers', [])
 
 
             $scope.copyData = function (data) {
+                console.log("datasasadasd : ");
+                console.log(data)
+
+                $scope.book_details = data;
                 $ionicLoading.show({
                     template: 'Loading...',
                 });
-                Book.get(data).then(function (result) {
 
-                    var a = document.getElementById(data + "-a");
-                    var k = document.getElementById(data + "-k");
-                    var foc = document.getElementById(data + "-foc");
-                    var inf = document.getElementById(data + "-inf");
-                    var tg = document.getElementById(data + "-tg");
-                    var e = document.getElementById(data + "-e");
-                    var arrival = document.getElementById(data + "-arrival");
-                    var time = document.getElementById(data + "-time");
+                Book.get(data.ID).then(function (result) {
+
+                    var a = document.getElementById(data.ID + "-a");
+                    var k = document.getElementById(data.ID + "-k");
+                    var foc = document.getElementById(data.ID + "-foc");
+                    var inf = document.getElementById(data.ID + "-inf");
+                    var tg = document.getElementById(data.ID + "-tg");
+                    var e = document.getElementById(data.ID + "-e");
+                    var arrival = document.getElementById(data.ID + "-arrival");
+                    var time = document.getElementById(data.ID + "-time");
                     var userId = $localStorage.userData.ID;
 
 
@@ -226,8 +232,11 @@ angular.module('app.controllers', [])
                                         $ionicLoading.hide()
 
                                         Code.updateStatus(result.ID);
+                                        Book.update($scope.book_details).then(function () {
 
-                                         
+                                        });
+
+
 
 
 
@@ -237,7 +246,7 @@ angular.module('app.controllers', [])
                                         $scope.results[data - 1 ].actual_foc = result.book_foc;
                                         $scope.results[data - 1].actual_inf = result.book_inf;
                                         $scope.results[data - 1].actual_tg = result.book_tg;
-                                        $scope.results[data - 1].actual_e = result.book_e
+                                        $scope.results[data - 1].actual_e = result.book_e;
                                         $scope.results[data - 1].actual_arrival = result.book_arrival;
                                         $scope.results[data - 1].actual_time = result.book_time;
                                         var confirmPopup = $ionicPopup.confirm({
@@ -339,65 +348,136 @@ angular.module('app.controllers', [])
 
             $scope.syncUpBook = function () {
                 $scope.counter = 1;
+                $scope.counter2 = 1;
+
+                $scope.syncData = [];
+                $scope.ctra = 0;
+
+
+                $scope.itemcount1 = 0;
+                $scope.itemcount2 = 0;
+                Code.getUpdated().then(function (result) {
+                    if (result != false) {
+                        $scope.results = angular.fromJson(result);
+                        $scope.itemcount1 = Object.keys($scope.results).length;
+                        angular.forEach($scope.results, function (value, key) {
+
+
+                            $scope.entry2 = {
+                                ID: value.ID,
+                                status: value.status
+
+                            };
+                            Code.syncUpCode($scope.entry2).success(function (response) {
+
+                                if ($scope.counter == $scope.itemcount1) {
+
+                                    Code.removeALL().then(function (result) {
+                                        console.log("Code remove")
+                                        console.log(result)
+                                    });
+
+                                }
+                                $scope.counter++;
+                            }).error(function (error) {
+
+                            });
+
+                        });
+
+                    } else {
+
+                    }
+
+                });
                 $ionicLoading.show({
                     template: 'Uploading data ...',
                 });
-                $scope.syncData = [];
-                Book.getAll().then(function (result) {
 
-                    $scope.results = angular.fromJson(result);
-                    $scope.itemcount = Object.keys($scope.results).length;
-                    angular.forEach($scope.results, function (value, key) {
+                Book.getAllUpdated().then(function (result) {
+                    if (result != false)
+                    {
+                        $scope.results = angular.fromJson(result);
+                        $scope.itemcount2 = Object.keys($scope.results).length;
+                        angular.forEach($scope.results, function (value, key) {
 
 
-                        $scope.entry = {
-                            ID: value.ID,
-                            actual_a: value.actual_a,
-                            actual_k: value.actual_k,
-                            actual_foc: value.actual_foc,
-                            actual_inf: value.actual_inf,
-                            actual_tg: value.actual_tg,
-                            actual_e: value.actual_e,
-                            actual_arrival: value.actual_arrival,
-                            actual_time: value.actual_time,
-                        };
-                        Book.syncUpBook($scope.entry).success(function (response) {
+                            $scope.entry = {
+                                ID: value.ID,
+                                actual_a: value.actual_a,
+                                actual_k: value.actual_k,
+                                actual_foc: value.actual_foc,
+                                actual_inf: value.actual_inf,
+                                actual_tg: value.actual_tg,
+                                actual_e: value.actual_e,
+                                actual_arrival: value.actual_arrival,
+                                actual_time: value.actual_time,
+                                resort_hotel: value.resort_hotel,
+                                unit: value.unit,
+                                unit_atd: value.unit_atd,
+                                driver: value.driver,
+                                coordinator: value.coordinator,
+                                sales_handle: value.sales_handle,
+                                agency: value.agency,
+                                remarks: value.remarks,
+                                status: value.status,
+                            };
+                            Book.syncUpBook($scope.entry).success(function (response) {
 
-                            $scope.counter++;
-                            if ($scope.counter == $scope.itemcount) {
-                                $ionicLoading.hide();
-                                Book.removeALL().then(function (result) {
-                                    console.log("booked remove")
-                                    console.log(result)
-                                });
-                                Code.removeALL().then(function (result) {
-                                    console.log("Code remove")
-                                    console.log(result)
-                                });
-                                var confirmPopup = $ionicPopup.confirm({
-                                    scope: $scope,
-                                    title: 'Notification',
-                                    template: 'Upload success',
-                                    buttons: [
 
-                                        {
-                                            text: '<b>Ok</b>',
-                                            type: 'balance',
-                                            onTap: function (e) {
-                                                location.reload();
+                                console.log(($scope.counter2));
+
+
+                                console.log(($scope.itemcount2));
+
+                                if ($scope.counter2 == $scope.itemcount2) {
+
+
+                                    $ionicLoading.hide();
+                                    Book.removeALL().then(function (result) {
+                                        console.log("booked remove")
+                                        console.log(result)
+                                    });
+                                    /* Code.removeALL().then(function (result) {
+                                     console.log("Code remove")
+                                     console.log(result)
+                                     });*/
+                                    var confirmPopup = $ionicPopup.confirm({
+                                        scope: $scope,
+                                        title: 'Notification',
+                                        template: 'Upload success',
+                                        buttons: [
+
+                                            {
+                                                text: '<b>Ok</b>',
+                                                type: 'balance',
+                                                onTap: function (e) {
+                                                    location.reload();
+                                                }
                                             }
-                                        }
-                                    ]
-                                });
-                            }
-                        }).error(function (error) {
-                            console.log(error);
-                            $scope.counter++;
-                            $ionicLoading.hide();
+                                        ]
+                                    });
+                                }
+                                $scope.counter2++;
+
+                            }).error(function (error) {
+                                console.log(error);
+                                $scope.counter2++;
+                                $ionicLoading.hide();
+                            });
+
                         });
-                        console.log($scope.counter);
-                    });
+                    } else {
+                        $ionicLoading.hide();
+                    }
+
+
                 });
+
+
+
+
+
             }
             $scope.logout = function () {
                 var confirmPopup = $ionicPopup.confirm({
