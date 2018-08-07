@@ -26,7 +26,7 @@
 
                 <thead>
                     <tr class="head">
-                       
+
                         <td colspan="8" class="text-center">Booked /Actual</td>
 
                         <td colspan="10" class="text-center">Information</td>
@@ -62,7 +62,7 @@
 
                 <tbody>
 
-                    <tr class="result" ng-repeat="data in results| filter:search_location">
+                    <tr class="result" ng-repeat="data in results | filter:search_location">
 
                         <td class="td-fixed gray-background">{{data['location']}}</td>
                         <td class="td-fixed td-fixed-margin gray-background">{{data['cv_number']}}</td>
@@ -108,9 +108,9 @@
 
                         <td >{{data['sales_handle']}}</td>
                         <td >{{data['agency']}}</td>-->
-                         <td >
+                        <td >
                             <input class="actual-text2" ng-model="data.sales_handle" id="{{data['ID'] + '-sales_handle'}}" type="text" value="{{data.sales_handle}}"></td>
-                          <td >
+                        <td >
                             <input class="actual-text2" ng-model="data.agency" id="{{data['ID'] + '-agency'}}" type="text" value="{{data.agency}}"></td>
                         <td >
                             <textarea cols="40" rows="2" style="width:100%" class="actual-text2" ng-model="data.remarks" id="{{data['ID'] + '-remarks'}}" type="text" value="{{data.remarks}}"></textarea>
@@ -126,7 +126,7 @@
                     </tr>
                 </tbody>
                 <table>	
-                    <button class="button button-full button-positive"  ng-click="saveAll()">Submit</button>
+                    <!--<button class="button button-full button-positive"  ng-click="saveAll()">Submit</button>-->
                     <div/>
                     </ion-content>
                     </ion-view>

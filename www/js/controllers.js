@@ -234,6 +234,21 @@ angular.module('app.controllers', [])
                                         Code.updateStatus(result.ID);
                                         Book.update($scope.book_details).then(function () {
 
+                                            var confirmPopup = $ionicPopup.confirm({
+                                                scope: $scope,
+                                                title: 'Notification',
+                                                template: 'Save success',
+                                                buttons: [
+
+                                                    {
+                                                        text: '<b>Ok</b>',
+                                                        type: 'balance',
+                                                        onTap: function (e) {
+
+                                                        }
+                                                    }
+                                                ]
+                                            });
                                         });
 
 
@@ -241,14 +256,15 @@ angular.module('app.controllers', [])
 
 
                                     } else {
-                                        $scope.results[data - 1].actual_a = result.book_a;
-                                        $scope.results[data - 1].actual_k = result.book_k;
-                                        $scope.results[data - 1 ].actual_foc = result.book_foc;
-                                        $scope.results[data - 1].actual_inf = result.book_inf;
-                                        $scope.results[data - 1].actual_tg = result.book_tg;
-                                        $scope.results[data - 1].actual_e = result.book_e;
-                                        $scope.results[data - 1].actual_arrival = result.book_arrival;
-                                        $scope.results[data - 1].actual_time = result.book_time;
+                                        $scope.results[data.ID - 1].actual_a = result.book_a;
+                                        $scope.results[data.ID - 1].actual_k = result.book_k;
+                                        $scope.results[data.ID - 1 ].actual_foc = result.book_foc;
+                                        $scope.results[data.ID - 1].actual_inf = result.book_inf;
+                                        $scope.results[data.ID - 1].actual_tg = result.book_tg;
+                                        $scope.results[data.ID - 1].actual_e = result.book_e;
+                                        $scope.results[data.ID - 1].actual_arrival = result.book_arrival;
+                                        $scope.results[data.ID - 1].actual_time = result.book_time;
+                                        console.log($scope.results[data.ID - 1])
                                         var confirmPopup = $ionicPopup.confirm({
                                             scope: $scope,
                                             title: 'Error',
@@ -269,28 +285,28 @@ angular.module('app.controllers', [])
 
                             } else {
 
-                                $scope.results[data - 1].actual_a = "";
-                                $scope.results[data - 1].actual_k = "";
-                                $scope.results[data - 1 ].actual_foc = "";
-                                $scope.results[data - 1].actual_inf = "";
-                                $scope.results[data - 1].actual_tg = "";
-                                $scope.results[data - 1].actual_e = "";
-                                $scope.results[data - 1].actual_arrival = "";
-                                $scope.results[data - 1].actual_time = "";
+                                $scope.results[data.ID - 1].actual_a = "";
+                                $scope.results[data.ID - 1].actual_k = "";
+                                $scope.results[data.ID - 1 ].actual_foc = "";
+                                $scope.results[data.ID - 1].actual_inf = "";
+                                $scope.results[data.ID - 1].actual_tg = "";
+                                $scope.results[data.ID - 1].actual_e = "";
+                                $scope.results[data.ID - 1].actual_arrival = "";
+                                $scope.results[data.ID - 1].actual_time = "";
                             }
 
                         });
                     } else {
 
                         console.log("update array")
-                        $scope.results[data - 1].actual_a = result.book_a;
-                        $scope.results[data - 1].actual_k = result.book_k;
-                        $scope.results[data - 1 ].actual_foc = result.book_foc;
-                        $scope.results[data - 1].actual_inf = result.book_inf;
-                        $scope.results[data - 1].actual_tg = result.book_tg;
-                        $scope.results[data - 1].actual_e = result.book_e
-                        $scope.results[data - 1].actual_arrival = result.book_arrival;
-                        $scope.results[data - 1].actual_time = result.book_time;
+                        $scope.results[data.ID - 1].actual_a = result.book_a;
+                        $scope.results[data.ID - 1].actual_k = result.book_k;
+                        $scope.results[data.ID - 1 ].actual_foc = result.book_foc;
+                        $scope.results[data.ID - 1].actual_inf = result.book_inf;
+                        $scope.results[data.ID - 1].actual_tg = result.book_tg;
+                        $scope.results[data.ID - 1].actual_e = result.book_e
+                        $scope.results[data.ID - 1].actual_arrival = result.book_arrival;
+                        $scope.results[data.ID - 1].actual_time = result.book_time;
                         // console.log($scope.results[data - 1]);
                         /* document.getElementById(data + "-a").value = result.book_a;
                          document.getElementById(data + "-k").value = result.book_k;
