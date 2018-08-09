@@ -14,7 +14,7 @@
             <label class="item item-input">
                 <input type="text" ng-model="entry.location" placeholder="Location">
             </label>
-            <label class="item item-input">
+            <!--<label class="item item-input">
                 <input type="text" ng-model="entry.cv_number" placeholder="CV Number">
             </label>
             <label class="item item-input">
@@ -43,8 +43,8 @@
             </label>
             <label class="item item-input">
                 <input type="text" ng-model="entry.book_time"  placeholder="Book Time">
-            </label>
-             <label class="item item-input">
+            </label>-->
+            <label class="item item-input">
                 <input type="text" ng-model="entry.actual_a"  placeholder="Actual A">
             </label>
             <label class="item item-input">
@@ -66,7 +66,7 @@
                 <input type="text" ng-model="entry.actual_arrival"  placeholder="Actual Arrival">
             </label>
             <label class="item item-input">
-                <input type="text" ng-model="entry.actual_time"  placeholder="Actual Time">
+                <input type="text" ng-click="openTimePickerModal()" ng-model="entry.actual_time"  placeholder="Actual Time">
             </label>
 
             <label class="item item-input">
@@ -81,7 +81,7 @@
             <label class="item item-input">
                 <input type="text" ng-model="entry.unit"  placeholder="Unit">
             </label>
-             <label class="item item-input">
+            <label class="item item-input">
                 <input type="text" ng-model="entry.unit_atd"  placeholder="Unit">
             </label>
             <label class="item item-input">

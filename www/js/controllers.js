@@ -1,7 +1,7 @@
 angular.module('app.controllers', [])
 
 
-        .controller('AppCtrl', function ($scope, $ionicModal, $timeout, $http, Users, $localStorage, $rootScope, Book, $ionicLoading, $ionicPopup) {
+        .controller('AppCtrl', function ($scope, $ionicModal, $timeout, $http, Users, $localStorage, $rootScope, Book, $ionicLoading, $ionicPopup, ionicTimePicker) {
 
             // With the new view caching in Ionic, Controllers are only called
             // when they are recreated or on app start, instead of every page change.
@@ -50,6 +50,14 @@ angular.module('app.controllers', [])
                 book_e: '',
                 book_arrival: '',
                 book_time: '',
+                actual_a: '',
+                actual_k: '',
+                actual_foc: '',
+                actual_inf: '',
+                actual_tg: '',
+                actual_e: '',
+                actual_arrival: '',
+                actual_time: '',
                 driver: '',
                 coordinator: '',
                 unit: '',
@@ -92,14 +100,14 @@ angular.module('app.controllers', [])
                     $rootScope.entry.book_e,
                     $rootScope.entry.book_arrival,
                     $rootScope.entry.book_time,
-                    $rootScope.entry.book_a,
-                    $rootScope.entry.book_k,
-                    $rootScope.entry.book_foc,
-                    $rootScope.entry.book_inf,
-                    $rootScope.entry.book_tg,
-                    $rootScope.entry.book_e,
-                    $rootScope.entry.book_arrival,
-                    $rootScope.entry.book_time,
+                    $rootScope.entry.actual_a,
+                    $rootScope.entry.actual_k,
+                    $rootScope.entry.actual_foc,
+                    $rootScope.entry.actual_inf,
+                    $rootScope.entry.actual_tg,
+                    $rootScope.entry.actual_e,
+                    $rootScope.entry.actual_arrival,
+                    $rootScope.entry.actual_time,
                     $rootScope.entry.resort_hotel,
                     $rootScope.entry.unit,
                     $rootScope.entry.unit_atd,
@@ -133,14 +141,51 @@ angular.module('app.controllers', [])
                         ]
                     });
                 });
+
+
+            }
+            $scope.openTimePickerModal = function () {
+
+                var ipObj1 = {
+                    callback: function (val) {
+                        if (typeof (val) === 'undefined') {
+                            console.log('Time not selected');
+                        } else {
+                            var selectedTime = new Date(val * 1000);
+
+                            var min = selectedTime.getUTCMinutes();
+                            var hour = selectedTime.getUTCHours();
+                            var fhour = (hour >= 12 ? str_pad(hour - 12) + ":" + str_pad(min) + " PM" : str_pad(hour - 12) + ":" + str_pad(min) + "AM");
+                            $rootScope.entry.actual_time = fhour;
+                            console.log(fhour);
+                            console.log($rootScope.entry);
+                          
+                        }
+                    },
+                    inputTime: 50400,
+                    format: 12,
+                    setLabel: 'Set'
+                };
+                ionicTimePicker.openTimePicker(ipObj1);
+            };
+            function str_pad(n) {
+                return String("00" + n).slice(-2);
             }
         })
 
-        .controller('ManifestCtrl', function ($ionicLoading, $scope, $location, $localStorage, $state, Book, $ionicPopup, Code) {
+        .controller('ManifestCtrl', function ($ionicLoading, $scope, $location, $localStorage, $state, Book, $ionicPopup, Code, ionicTimePicker) {
             $scope.results = [];
             $ionicLoading.show({
                 template: 'Loading data...',
             });
+
+
+
+
+
+
+
+
             $scope.search_cv = "";
             $scope.search_location = "";
             $scope.getDataBooking = function () {
@@ -304,7 +349,7 @@ angular.module('app.controllers', [])
                         $scope.results[data.ID - 1 ].actual_foc = result.book_foc;
                         $scope.results[data.ID - 1].actual_inf = result.book_inf;
                         $scope.results[data.ID - 1].actual_tg = result.book_tg;
-                        $scope.results[data.ID - 1].actual_e = result.book_e
+                        $scope.results[data.ID - 1].actual_e = result.book_e;
                         $scope.results[data.ID - 1].actual_arrival = result.book_arrival;
                         $scope.results[data.ID - 1].actual_time = result.book_time;
                         // console.log($scope.results[data - 1]);
@@ -321,7 +366,36 @@ angular.module('app.controllers', [])
 
                     $ionicLoading.hide();
                 })
+
             }
+            function str_pad(n) {
+                return String("00" + n).slice(-2);
+            }
+            $scope.openTimePicker = function (ID) {
+                console.log(ID);
+                var ipObj1 = {
+                    callback: function (val) {
+                        if (typeof (val) === 'undefined') {
+                            console.log('Time not selected');
+                        } else {
+                            var selectedTime = new Date(val * 1000);
+
+                            var min = selectedTime.getUTCMinutes();
+                            var hour = selectedTime.getUTCHours();
+                            var fhour = (hour >= 12 ? str_pad(hour - 12) + ":" + str_pad(min) + " PM" : str_pad(hour - 12) + ":" + str_pad(min) + "AM");
+                            console.log(ID);
+
+                            $scope.results[(ID == 0 ? ID : ID - 1)].actual_time = fhour;
+                            console.log(fhour);
+                        }
+                    },
+                    inputTime: 50400,
+                    format: 12,
+                    setLabel: 'Set'
+                };
+                ionicTimePicker.openTimePicker(ipObj1);
+            };
+
         })
         .controller('SettingCtrl', function ($scope, $location, $ionicLoading, $ionicPopup, $localStorage, $state, Book, Users, Code, $http) {
             $scope.serverUrl = "";
@@ -388,7 +462,7 @@ angular.module('app.controllers', [])
 
                                 if ($scope.counter == $scope.itemcount1) {
 
-                                    Code.removeALL().then(function (result) {
+                                    Code.removeALLSave().then(function (result) {
                                         console.log("Code remove")
                                         console.log(result)
                                     });
@@ -450,7 +524,7 @@ angular.module('app.controllers', [])
 
 
                                     $ionicLoading.hide();
-                                    Book.removeALL().then(function (result) {
+                                    Book.removeALLSave().then(function (result) {
                                         console.log("booked remove")
                                         console.log(result)
                                     });
@@ -514,9 +588,9 @@ angular.module('app.controllers', [])
         })
         .controller('LoginCtrl', function ($scope, Users, $location, $http, $localStorage, $ionicLoading, DBA, Code, $ionicPopup) {
             $scope.loginData = {username: 'admin', password: '123456', serverUrl: "test.islandstarexpress.net/isemobile"};
-            if ($localStorage.userData) {
-                $location.path('/app/manifest');
-            }
+            /* if ($localStorage.userData) {
+             $location.path('/app/manifest');
+             }*/
 
 
             $scope.error = {};

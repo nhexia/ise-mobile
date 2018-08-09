@@ -62,7 +62,7 @@
 
                 <tbody>
 
-                    <tr class="result" ng-repeat="data in results | filter:search_location">
+                    <tr class="result" ng-repeat="data in results| filter:search_location">
 
                         <td class="td-fixed gray-background">{{data['location']}}</td>
                         <td class="td-fixed td-fixed-margin gray-background">{{data['cv_number']}}</td>
@@ -83,7 +83,7 @@
                         <td ><span class="actual-text-clear">{{data['book_arrival']}}</span>
                             <input class="actual-text" ng-model="data.actual_arrival" id="{{data['ID'] + '-arrival'}}" type="text" value="{{data.actual_arrival}}"></td>
                         <td ><span class="actual-text-clear">{{data['book_time']}}</span>
-                            <input class="actual-text" ng-model="data.actual_time" id="{{data['ID'] + '-time'}}" type="text" value="{{data.actual_time}}"></td>
+                            <input  ng-click="openTimePicker($index)" class="actual-text" ng-model="data.actual_time" id="{{data['ID'] + '-time'}}" type="text" value="{{data.actual_time}}"></td>
 
                         <td >
                             <input class="actual-text2" ng-model="data.resort_hotel" id="{{data['ID'] + '-resort_hotel'}}" type="text" value="{{data.resort_hotel}}"></td>
@@ -125,8 +125,9 @@
 
                     </tr>
                 </tbody>
-                <table>	
-                    <!--<button class="button button-full button-positive"  ng-click="saveAll()">Submit</button>-->
-                    <div/>
-                    </ion-content>
-                    </ion-view>
+
+            </table>	
+            <!--<button class="button button-full button-positive"  ng-click="saveAll()">Submit</button>-->
+        </div>
+    </ion-content>
+</ion-view>

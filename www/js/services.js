@@ -201,7 +201,7 @@ angular.module('app.services', [])
                                 items = JSON.stringify(itemsColl);
 
                                 return items;
-                            }else{
+                            } else {
                                 return false;
                             }
                         });
@@ -232,6 +232,10 @@ angular.module('app.services', [])
                 var parameters = [];
                 return DBA.query("DELETE FROM book", parameters);
             }
+            self.removeALLSave = function () {
+                var parameters = [];
+                return DBA.query("DELETE FROM book WHERE status=1", parameters);
+            }
 
             self.get = function (id) {
                 var parameters = [id];
@@ -245,12 +249,12 @@ angular.module('app.services', [])
                 console.log(data);
                 var parameters = [
                     data.actual_a,
-                    data.actual_k, 
-                    data.actual_foc, 
-                    data.actual_inf, 
+                    data.actual_k,
+                    data.actual_foc,
+                    data.actual_inf,
                     data.actual_tg,
                     data.actual_e,
-                    data.actual_arrival, 
+                    data.actual_arrival,
                     data.actual_time,
                     data.resort_hotel,
                     data.unit,
@@ -312,6 +316,10 @@ angular.module('app.services', [])
                 var parameters = [];
                 return DBA.query("DELETE FROM code", parameters);
             }
+            self.removeALLSave = function () {
+                var parameters = [];
+                return DBA.query("DELETE FROM book WHERE status=1", parameters);
+            }
 
             self.get = function (id, auth_code) {
                 var parameters = [id, auth_code];
@@ -322,7 +330,7 @@ angular.module('app.services', [])
             }
             self.getUpdated = function () {
                 var parameters = [];
-                    var items = [];
+                var items = [];
                 return DBA.query("SELECT * FROM code WHERE status = 1 ")
                         .then(function (result) {
                             console.log("count = ")
@@ -338,7 +346,7 @@ angular.module('app.services', [])
                                 items = JSON.stringify(itemsColl);
 
                                 return items;
-                            }else{
+                            } else {
                                 return false;
                             }
                         });

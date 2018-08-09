@@ -35,7 +35,7 @@ document.addEventListener('deviceready', function () {
 });
 
 
-angular.module('starter', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 'ngStorage'])
+angular.module('starter', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 'ngStorage','ionic-timepicker'])
 
         .run(function ($ionicPlatform, $cordovaSQLite, $http, $window,$rootScope) {
             $ionicPlatform.ready(function ($cordovaSQLite, $http, $window) {
