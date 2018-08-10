@@ -494,6 +494,7 @@ angular.module('app.controllers', [])
 
                             $scope.entry = {
                                 ID: value.ID,
+                                location: value.location,
                                 actual_a: value.actual_a,
                                 actual_k: value.actual_k,
                                 actual_foc: value.actual_foc,
@@ -511,15 +512,15 @@ angular.module('app.controllers', [])
                                 agency: value.agency,
                                 remarks: value.remarks,
                                 status: value.status,
+                                user: value.user,
                             };
+                              console.log("before response")
+                                console.log($scope.entry)
+
                             Book.syncUpBook($scope.entry).success(function (response) {
 
 
-                                console.log(($scope.counter2));
-
-
-                                console.log(($scope.itemcount2));
-
+                              
                                 if ($scope.counter2 == $scope.itemcount2) {
 
 

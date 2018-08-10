@@ -186,7 +186,7 @@ angular.module('app.services', [])
                 var param = [userId];
                 var items = [];
 
-                return DBA.query("SELECT * FROM book WHERE user = " + userId + " and status in (1,1.0)")
+                return DBA.query("SELECT * FROM book WHERE status in (1,1.0,'1')")
                         .then(function (result) {
                             console.log("count = ")
                             console.log(result);
@@ -196,7 +196,7 @@ angular.module('app.services', [])
                                     itemsColl[i] = result.rows.item(i);
 
                                 }
-                                ;
+                             
 
                                 items = JSON.stringify(itemsColl);
 
@@ -333,7 +333,8 @@ angular.module('app.services', [])
                 var items = [];
                 return DBA.query("SELECT * FROM code WHERE status = 1 ")
                         .then(function (result) {
-                            console.log("count = ")
+                            console.log("count = ");
+
                             console.log(result);
                             if (result.rows.length > 0) {
                                 var itemsColl = [];
