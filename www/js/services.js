@@ -210,7 +210,7 @@ angular.module('app.services', [])
             self.add = function (data) {
 
                 var parameters = data;
-                console.log(data);
+                //console.log(data);
 
                 return DBA.query("INSERT INTO book (ID, location, cv_number, account_name, book_a, book_k, book_foc, book_inf, book_tg, book_e,\n\
                                                      book_arrival, book_time, actual_a, actual_k, actual_foc, actual_inf, actual_tg, actual_e, actual_arrival, actual_time,\n\

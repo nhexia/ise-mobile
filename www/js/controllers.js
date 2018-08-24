@@ -35,7 +35,6 @@ angular.module('app.controllers', [])
                     $scope.closeLogin();
                 }, 1000);
             };
-
             /* add modal*/
 
             $rootScope.entry = {
@@ -61,22 +60,20 @@ angular.module('app.controllers', [])
                 driver: '',
                 coordinator: '',
                 unit: '',
+                unit_atd: '',
                 resort_hotel: '',
+                sales_handle: '',
                 agency: '',
                 remarks: '',
-
             };
-
             $ionicModal.fromTemplateUrl('templates/entry_modal.html', {
                 scope: $scope,
                 animation: 'slide-in-up',
-
             }).then(function (modal) {
                 $scope.modal = modal;
             });
             $scope.showEntry = function () {
                 $scope.modal.show();
-
             }
 
             $scope.hideModal = function () {
@@ -120,10 +117,8 @@ angular.module('app.controllers', [])
                     1
 
                 ];
-
                 Book.addLocal($scope.toAdd).then(function (result) {
                     $ionicLoading.hide();
-
                     var confirmPopup = $ionicPopup.confirm({
                         scope: $scope,
                         title: 'Success',
@@ -141,8 +136,6 @@ angular.module('app.controllers', [])
                         ]
                     });
                 });
-
-
             }
             $scope.openTimePickerModal = function () {
 
@@ -152,14 +145,12 @@ angular.module('app.controllers', [])
                             console.log('Time not selected');
                         } else {
                             var selectedTime = new Date(val * 1000);
-
                             var min = selectedTime.getUTCMinutes();
                             var hour = selectedTime.getUTCHours();
                             var fhour = (hour >= 12 ? str_pad(hour - 12) + ":" + str_pad(min) + " PM" : str_pad(hour - 12) + ":" + str_pad(min) + "AM");
                             $rootScope.entry.actual_time = fhour;
                             console.log(fhour);
                             console.log($rootScope.entry);
-                          
                         }
                     },
                     inputTime: 50400,
@@ -173,19 +164,11 @@ angular.module('app.controllers', [])
             }
         })
 
-        .controller('ManifestCtrl', function ($ionicLoading, $scope, $location, $localStorage, $state, Book, $ionicPopup, Code, ionicTimePicker) {
+        .controller('ManifestCtrl', function ($ionicLoading, $timeout, $scope, $location, $localStorage, $state, Book, $ionicPopup, Code, ionicTimePicker) {
             $scope.results = [];
             $ionicLoading.show({
                 template: 'Loading data...',
             });
-
-
-
-
-
-
-
-
             $scope.search_cv = "";
             $scope.search_location = "";
             $scope.getDataBooking = function () {
@@ -196,6 +179,7 @@ angular.module('app.controllers', [])
                         //console.log(result);
 
                         $scope.results = angular.fromJson(result);
+                        console.log($scope.results);
                         $ionicLoading.hide();
                     });
             }
@@ -229,16 +213,16 @@ angular.module('app.controllers', [])
             }
 
 
-            $scope.copyData = function (data) {
+            $scope.copyData = function (data, index_item) {
                 console.log("datasasadasd : ");
-                console.log(data)
+                // console.log(data)
 
                 $scope.book_details = data;
                 $ionicLoading.show({
                     template: 'Loading...',
                 });
-
                 Book.get(data.ID).then(function (result) {
+
 
                     var a = document.getElementById(data.ID + "-a");
                     var k = document.getElementById(data.ID + "-k");
@@ -262,6 +246,12 @@ angular.module('app.controllers', [])
                             (time.value != result.book_time && time.value != "")
 
                             ) {
+
+
+
+                        console.log("test");
+                        console.log($scope.results[index_item]);
+
                         $ionicPopup.prompt({
                             title: 'Authorization ',
                             template: 'Enter your authorization code',
@@ -270,14 +260,13 @@ angular.module('app.controllers', [])
                         }).then(function (res) {
                             if (res) {
                                 Code.checkCode(result.ID, res).then(function (result) {
-                                    console.log("code");
-
 
                                     if (result != false && result.status != 1) {
                                         $ionicLoading.hide()
 
                                         Code.updateStatus(result.ID);
-                                        Book.update($scope.book_details).then(function () {
+
+                                        Book.update($scope.results[index_item]).then(function () {
 
                                             var confirmPopup = $ionicPopup.confirm({
                                                 scope: $scope,
@@ -295,21 +284,9 @@ angular.module('app.controllers', [])
                                                 ]
                                             });
                                         });
-
-
-
-
-
                                     } else {
-                                        $scope.results[data.ID - 1].actual_a = result.book_a;
-                                        $scope.results[data.ID - 1].actual_k = result.book_k;
-                                        $scope.results[data.ID - 1 ].actual_foc = result.book_foc;
-                                        $scope.results[data.ID - 1].actual_inf = result.book_inf;
-                                        $scope.results[data.ID - 1].actual_tg = result.book_tg;
-                                        $scope.results[data.ID - 1].actual_e = result.book_e;
-                                        $scope.results[data.ID - 1].actual_arrival = result.book_arrival;
-                                        $scope.results[data.ID - 1].actual_time = result.book_time;
-                                        console.log($scope.results[data.ID - 1])
+                                        console.log($scope.results);
+
                                         var confirmPopup = $ionicPopup.confirm({
                                             scope: $scope,
                                             title: 'Error',
@@ -330,28 +307,60 @@ angular.module('app.controllers', [])
 
                             } else {
 
-                                $scope.results[data.ID - 1].actual_a = "";
-                                $scope.results[data.ID - 1].actual_k = "";
-                                $scope.results[data.ID - 1 ].actual_foc = "";
-                                $scope.results[data.ID - 1].actual_inf = "";
-                                $scope.results[data.ID - 1].actual_tg = "";
-                                $scope.results[data.ID - 1].actual_e = "";
-                                $scope.results[data.ID - 1].actual_arrival = "";
-                                $scope.results[data.ID - 1].actual_time = "";
+
+                                $scope.results[index_item].actual_a = "";
+                                $scope.results[index_item].actual_k = "";
+                                $scope.results[index_item ].actual_foc = "";
+                                $scope.results[index_item].actual_inf = "";
+                                $scope.results[index_item].actual_tg = "";
+                                $scope.results[index_item].actual_e = "";
+                                $scope.results[index_item].actual_arrival = "";
+                                $scope.results[index_item].actual_time = "";
                             }
 
                         });
                     } else {
 
                         console.log("update array")
-                        $scope.results[data.ID - 1].actual_a = result.book_a;
-                        $scope.results[data.ID - 1].actual_k = result.book_k;
-                        $scope.results[data.ID - 1 ].actual_foc = result.book_foc;
-                        $scope.results[data.ID - 1].actual_inf = result.book_inf;
-                        $scope.results[data.ID - 1].actual_tg = result.book_tg;
-                        $scope.results[data.ID - 1].actual_e = result.book_e;
-                        $scope.results[data.ID - 1].actual_arrival = result.book_arrival;
-                        $scope.results[data.ID - 1].actual_time = result.book_time;
+                        console.log($scope.results[index_item]);
+                        $scope.results[index_item].actual_a = result.book_a;
+                        $scope.results[index_item].actual_k = result.book_k;
+                        $scope.results[index_item].actual_foc = result.book_foc;
+                        $scope.results[index_item].actual_inf = result.book_inf;
+                        $scope.results[index_item].actual_tg = result.book_tg;
+                        $scope.results[index_item].actual_e = result.book_e;
+                        $scope.results[index_item].actual_arrival = result.book_arrival;
+                        $scope.results[index_item].actual_time = result.book_time;
+
+                        $scope.results[index_item].resort_hotel = result.resort_hotel;
+                        $scope.results[index_item].unit = result.unit;
+                        $scope.results[index_item].unit_atd = result.unit_atd;
+                        $scope.results[index_item].driver = result.driver;
+                        $scope.results[index_item].coordinator = result.coordinator;
+                        $scope.results[index_item].sales_handle = result.sales_handle;
+                        $scope.results[index_item].agency = result.agency;
+                        $scope.results[index_item].remarks = result.remarks;
+                        $timeout(function () {
+                            Book.update($scope.results[index_item]).then(function () {
+
+                                var confirmPopup = $ionicPopup.confirm({
+                                    scope: $scope,
+                                    title: 'Notification',
+                                    template: 'Save success',
+                                    buttons: [
+
+                                        {
+                                            text: '<b>Ok</b>',
+                                            type: 'balance',
+                                            onTap: function (e) {
+
+
+                                            }
+                                        }
+                                    ]
+                                });
+                            });
+                        }, 1000);
                         // console.log($scope.results[data - 1]);
                         /* document.getElementById(data + "-a").value = result.book_a;
                          document.getElementById(data + "-k").value = result.book_k;
@@ -379,13 +388,11 @@ angular.module('app.controllers', [])
                             console.log('Time not selected');
                         } else {
                             var selectedTime = new Date(val * 1000);
-
                             var min = selectedTime.getUTCMinutes();
                             var hour = selectedTime.getUTCHours();
                             var fhour = (hour >= 12 ? str_pad(hour - 12) + ":" + str_pad(min) + " PM" : str_pad(hour - 12) + ":" + str_pad(min) + "AM");
                             console.log(ID);
-
-                            $scope.results[(ID == 0 ? ID : ID - 1)].actual_time = fhour;
+                            $scope.results[ID].actual_time = fhour;
                             console.log(fhour);
                         }
                     },
@@ -395,7 +402,6 @@ angular.module('app.controllers', [])
                 };
                 ionicTimePicker.openTimePicker(ipObj1);
             };
-
         })
         .controller('SettingCtrl', function ($scope, $location, $ionicLoading, $ionicPopup, $localStorage, $state, Book, Users, Code, $http) {
             $scope.serverUrl = "";
@@ -439,11 +445,8 @@ angular.module('app.controllers', [])
             $scope.syncUpBook = function () {
                 $scope.counter = 1;
                 $scope.counter2 = 1;
-
                 $scope.syncData = [];
                 $scope.ctra = 0;
-
-
                 $scope.itemcount1 = 0;
                 $scope.itemcount2 = 0;
                 Code.getUpdated().then(function (result) {
@@ -466,15 +469,12 @@ angular.module('app.controllers', [])
                                         console.log("Code remove")
                                         console.log(result)
                                     });
-
                                 }
                                 $scope.counter++;
                             }).error(function (error) {
 
                             });
-
                         });
-
                     } else {
 
                     }
@@ -483,7 +483,6 @@ angular.module('app.controllers', [])
                 $ionicLoading.show({
                     template: 'Uploading data ...',
                 });
-
                 Book.getAllUpdated().then(function (result) {
                     if (result != false)
                     {
@@ -514,13 +513,13 @@ angular.module('app.controllers', [])
                                 status: value.status,
                                 user: value.user,
                             };
-                              console.log("before response")
-                                console.log($scope.entry)
+                            console.log("before response")
+                            console.log($scope.entry)
 
                             Book.syncUpBook($scope.entry).success(function (response) {
 
 
-                              
+
                                 if ($scope.counter2 == $scope.itemcount2) {
 
 
@@ -550,13 +549,11 @@ angular.module('app.controllers', [])
                                     });
                                 }
                                 $scope.counter2++;
-
                             }).error(function (error) {
                                 console.log(error);
                                 $scope.counter2++;
                                 $ionicLoading.hide();
                             });
-
                         });
                     } else {
                         $ionicLoading.hide();
@@ -564,11 +561,6 @@ angular.module('app.controllers', [])
 
 
                 });
-
-
-
-
-
             }
             $scope.logout = function () {
                 var confirmPopup = $ionicPopup.confirm({
