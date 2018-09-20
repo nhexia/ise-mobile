@@ -109,9 +109,11 @@ th, td {
 
 .td-fixed-margin {
     margin-left: 80px;
+    z-index: 99;
 }
 .td-fixed-margin2 {
     margin-left: 160px;
+    z-index: 99;
 }
 .td-fixed-padding {
     padding-left: 31px;
@@ -120,15 +122,23 @@ th, td {
     position: fixed;
     left: 0px;
     width: 80px;
-    z-index: 1;
+
     height: 670px;
     word-wrap:break-word;
+    z-index: 99;
 }
 .td-a{
-    padding-left: 250px !important;
+    padding-left: 227px !important;
     text-align: right !important;
-   
+
 }
 .gray-background {
     background-color: #FEFEFE;
+}
+.ng-binding{
+
+}
+.td-b{
+    min-width: 
+        100px;
 }

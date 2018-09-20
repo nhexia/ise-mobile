@@ -11,8 +11,25 @@
     </ion-header-bar>
     <ion-content class="padding">
         <div class="list list-inset">
-            <label class="item item-input">
-                <input type="text" ng-model="entry.location" placeholder="Location">
+            <label class="item item-input item-select">
+                <div class="input-label">
+                  Pick up Location
+                </div>
+                <!--<input type="text" ng-model="entry.location" placeholder="Location">-->
+
+                <select ng-model="entry.location" >
+                    <option ng-repeat="loc in pickup">{{loc}}</option>
+                </select>
+            </label>
+             <label class="item item-input item-select">
+                <div class="input-label">
+                  Drop Off
+                </div>
+                <!--<input type="text" ng-model="entry.location" placeholder="Location">-->
+
+                <select ng-model="entry.actual_a" >
+                    <option ng-repeat="loc in pickup">{{loc}}</option>
+                </select>
             </label>
             <!--<label class="item item-input">
                 <input type="text" ng-model="entry.cv_number" placeholder="CV Number">
@@ -43,10 +60,10 @@
             </label>
             <label class="item item-input">
                 <input type="text" ng-model="entry.book_time"  placeholder="Book Time">
-            </label>-->
-            <label class="item item-input">
-                <input type="text" ng-model="entry.actual_a"  placeholder="Actual A">
             </label>
+            <label class="item item-input">
+                <input type="text" ng-model="entry.actual_a"  placeholder="Drop Off">
+            </label>-->
             <label class="item item-input">
                 <input type="text" ng-model="entry.actual_k"  placeholder="Actual K">
             </label>
@@ -72,24 +89,24 @@
             <label class="item item-input">
                 <input type="text" ng-model="entry.driver"  placeholder="Driver">
             </label>
-            <label class="item item-input">
+           <!-- <label class="item item-input">
                 <input type="text" ng-model="entry.coordinator"  placeholder="Coordinator">
-            </label>
+            </label>-->
             <label class="item item-input">
                 <input type="text" ng-model="entry.sales_handle"  placeholder="Sales Handle">
             </label>
-            <label class="item item-input">
+            <!--<label class="item item-input">
                 <input type="text" ng-model="entry.unit"  placeholder="Unit">
             </label>
             <label class="item item-input">
                 <input type="text" ng-model="entry.unit_atd"  placeholder="Unit Atd">
-            </label>
+            </label>-->
             <label class="item item-input">
                 <input type="text" ng-model="entry.resort_hotel"  placeholder="Resort Hotel">
             </label>
-            <label class="item item-input">
+            <!--<label class="item item-input">
                 <input type="text" ng-model="entry.agency"  placeholder="Agency">
-            </label>
+            </label>-->
             <label class="item item-input">
                 <input type="text" ng-model="entry.remarks"  placeholder="Remarks">
             </label>

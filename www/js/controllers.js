@@ -36,7 +36,14 @@ angular.module('app.controllers', [])
                 }, 1000);
             };
             /* add modal*/
-
+            $scope.pickup ={
+                298:'Cagban Port - Boracay',
+                297:'Caticlan Airport',
+                486:'Caticlan Jetty',
+                487:'Kalibo International Airport',
+                317:'Resort',
+                1195:'Resorts beyond Station 1 (Yapak, Panoly, Nami, etc)'}
+            ;
             $rootScope.entry = {
                 location: '',
                 cv_number: '',
@@ -87,6 +94,7 @@ angular.module('app.controllers', [])
                 console.log($rootScope.userid);
                 $scope.toAdd = [
                     $rootScope.entry.location,
+                    
                     $rootScope.entry.cv_number,
                     $rootScope.entry.account_name,
                     $rootScope.entry.book_a,
