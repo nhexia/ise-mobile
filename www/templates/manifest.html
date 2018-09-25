@@ -60,7 +60,7 @@
 
                 <tbody>
 
-                    <tr class="result" ng-repeat="data in results| filter:search_location">
+                    <tr class="result" ng-repeat="data in results | filter:search_location">
 
                         <td class="td-fixed gray-background">{{data['location']}}</td>
                         <td class="td-fixed td-fixed-margin gray-background">{{data['cv_number']}}</td>
@@ -69,16 +69,14 @@
                         <td  >{{data['book_a']}}</td>
                         <td >
                             <label class="item item-input item-select">
-                                <div class="input-label">
-                                    Drop Off
-                                </div>
-                                <!--<input type="text" ng-model="entry.location" placeholder="Location">-->
 
-                                <select ng-model="entry.actual_a" >
+
+
+                                <select class="actual-dropdown" ng-model="data.actual_a" >
                                     <option  ng-repeat="loc in pickup" value="{{loc}}" >{{loc}}</option>
                                 </select>
                             </label>
-                           
+
                         </td>
                         <td ><span class="actual-text-clear">{{data['book_k']}}</span>
                             <input class="actual-text" ng-model="data.actual_k" id="{{data['ID'] + '-k'}}" type="text" ng-value="{{data.actual_k}}">

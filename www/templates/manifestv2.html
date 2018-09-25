@@ -1,0 +1,145 @@
+<ion-view view-title="Manifest">
+
+    <ion-content>
+        <!--<ion-list>
+          <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+            {{playlist.title}}
+          </ion-item>
+        </ion-list>-->
+
+        <div class="search-table-outter">
+
+
+
+            <div class="list">
+
+                <div class="item item-input-inset">
+                    <h3>Search : </h3>
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="search_location">
+                    </label>&nbsp;
+
+                </div>
+
+            </div>
+            <div class="zui-wrapper">
+                <div class="zui-scroller">
+                    <table class="zui-table" cellspacing="2" cellpadding="">
+
+                        <thead>
+                            <tr class="">
+
+                                <td colspan="8" class="text-center">Booked /Actual</td>
+
+                                <td colspan="10" class="text-center">Information</td>
+
+                            </tr>
+                            <tr class="">
+                                <td class="zui-sticky-col">Pick up Location</td>
+                                <td class="zui-sticky-col2" >CV Number</td>
+                                <td class="zui-sticky-col3" >Account Name</td>
+                                <td class=""  >&nbsp;</td>
+                                <td class="" >Book Drop Off</td>
+                                <td class=""  >Actual Drop Off</td>
+                                <td >K</td>
+                                <td >FOC</td>
+                                <td >INF</td>
+                                <td >TG</td>
+                                <td >E</td>
+                                <td >ARRIVAL</td>
+                                <td >Time</td>
+                                <td >Resort Hotel</td>
+
+                                <td >Driver</td>
+                                <!--<td >Coordinator</td>-->
+                                <td >Sales Handle</td>
+                                <!--<td >Agency</td>-->
+                                <td style="width: 400px">Remarks</td>
+                                <td >Sames as Booked?</td>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr class="result" ng-repeat="data in results| filter:search_location">
+
+                                <td class="zui-sticky-col gray-background">{{data['location']}}</td>
+                                <td class="zui-sticky-col2 gray-background">{{data['cv_number']}}</td>
+                                <td class="zui-sticky-col3 gray-background">{{data['account_name']}}</td>
+                                <td >&nbsp;</td>
+                                <td  >{{data['book_a']}}</td>
+                                <td >
+                                    <label class="item item-input item-select">
+
+
+
+                                        <select class="actual-dropdown" ng-model="data.actual_a" >
+                                            <option  ng-repeat="loc in pickup" value="{{loc}}" >{{loc}}</option>
+                                        </select>
+                                    </label>
+
+                                </td>
+                                <td ><span class="actual-text-clear">{{data['book_k']}}</span>
+                                    <input class="actual-text" ng-model="data.actual_k" id="{{data['ID'] + '-k'}}" type="text" ng-value="{{data.actual_k}}">
+                                </td>
+                                <td ><span class="actual-text-clear">{{data['book_foc']}}</span>
+                                    <input class="actual-text" ng-model="data.actual_foc" id="{{data['ID'] + '-foc'}}" type="text" value="{{data.actual_foc}}">
+                                </td>
+                                <td ><span class="actual-text-clear">{{data['book_inf']}}</span>
+                                    <input class="actual-text" ng-model="data.actual_inf" id="{{data['ID'] + '-inf'}}" type="text" value="{{data.actual_inf}}">
+                                </td>
+                                <td ><span class="actual-text-clear">{{data['book_tg']}}</span>
+                                    <input class="actual-text" ng-model="data.actual_tg" id="{{data['ID'] + '-tg'}}" type="text" value="{{data.actual_tg}}">
+                                </td>
+                                <td ><span class="actual-text-clear">{{data['book_e']}}</span>
+                                    <input class="actual-text" ng-model="data.actual_e" id="{{data['ID'] + '-e'}}" type="text" value="{{data.actual_e}}">
+                                </td>
+                                <td ><span class="actual-text-clear">{{data['book_arrival']}}</span>
+                                    <input class="actual-text" ng-model="data.actual_arrival" id="{{data['ID'] + '-arrival'}}" type="text" value="{{data.actual_arrival}}">
+                                </td>
+                                <td ><span class="actual-text-clear">{{data['book_time']}}</span>
+                                    <input  ng-click="openTimePicker($index)" class="actual-text" ng-model="data.actual_time" id="{{data['ID'] + '-time'}}" type="text" value="{{data.actual_time}}">
+                                </td>
+                                <td >
+                                    <input class="actual-text2" ng-model="data.resort_hotel" id="{{data['ID'] + '-resort_hotel'}}" type="text" value="{{data.resort_hotel}}">
+                                </td>
+                                <td >
+                                    <input class="actual-text2" ng-model="data.driver" id="{{data['ID'] + '-driver'}}" type="text" value="{{data.driver}}">
+                                </td>
+
+                                <!--<td >
+                                    <input class="actual-text2" ng-model="data.coordinator" id="{{data['ID'] + '-coordinator'}}" type="text" value="{{data.coordinator}}"></td>
+        
+                                <td >{{data['unit']}}	</td>
+                                <td >{{data['unit_atd']}}</td>
+                                <td >{{data['driver']}}</td>				  
+                                <td >{{data['coordinator']}}</td>
+        
+                                <td >{{data['sales_handle']}}</td>
+                                <td >{{data['agency']}}</td>-->
+                                <td >
+                                    <input class="actual-text2" ng-model="data.sales_handle" id="{{data['ID'] + '-sales_handle'}}" type="text" value="{{data.sales_handle}}"></td>
+                                <!--<td >
+                                    <input class="actual-text2" ng-model="data.agency" id="{{data['ID'] + '-agency'}}" type="text" value="{{data.agency}}"></td>-->
+                                <td >
+                                    <textarea cols="40" rows="2" style="width:100%" class="actual-text2" ng-model="data.remarks" id="{{data['ID'] + '-remarks'}}" type="text" value="{{data.remarks}}"></textarea>
+                                </td>
+
+                                <!-- <td >{{data['remarks']}}</td>-->
+
+                                <td >
+                                    <button class="button button-balanced icon ion-checkmark"  ng-click="copyData(data, $index)"></button>
+                                    <!--<button class="button button-assertive" ng-click="ctrl.add($index)"><ion-icon class="close-circle"></ion-icon></button>-->
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>	
+                </div>
+            </div>
+            <!--<button class="button button-full button-positive"  ng-click="saveAll()">Submit</button>-->
+        </div>
+    </ion-content>
+</ion-view>
