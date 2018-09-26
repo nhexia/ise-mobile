@@ -36,13 +36,13 @@ angular.module('app.controllers', [])
                 }, 1000);
             };
             /* add modal*/
-            $scope.pickup ={
-                298:'Cagban Port - Boracay',
-                297:'Caticlan Airport',
-                486:'Caticlan Jetty',
-                487:'Kalibo International Airport',
-                317:'Resort',
-                1195:'Resorts beyond Station 1 (Yapak, Panoly, Nami, etc)'}
+            $scope.pickup = {
+                298: 'Cagban Port - Boracay',
+                297: 'Caticlan Airport',
+                486: 'Caticlan Jetty',
+                487: 'Kalibo International Airport',
+                317: 'Resort',
+                1195: 'Resorts beyond Station 1 (Yapak, Panoly, Nami, etc)'}
             ;
             $rootScope.entry = {
                 location: '',
@@ -94,7 +94,7 @@ angular.module('app.controllers', [])
                 console.log($rootScope.userid);
                 $scope.toAdd = [
                     $rootScope.entry.location,
-                    
+
                     $rootScope.entry.cv_number,
                     $rootScope.entry.account_name,
                     $rootScope.entry.book_a,
@@ -139,6 +139,7 @@ angular.module('app.controllers', [])
                                 onTap: function (e) {
 
                                     $scope.modal.hide();
+                                    location.reload();
                                 }
                             }
                         ]
@@ -172,7 +173,12 @@ angular.module('app.controllers', [])
             }
         })
 
-        .controller('ManifestCtrl', function ($ionicLoading, $timeout, $scope, $location, $localStorage, $state, Book, $ionicPopup, Code, ionicTimePicker) {
+        .controller('ManifestCtrl', function (NgTableParams, $ionicLoading, $timeout, $scope, $localStorage, Book, $ionicPopup, Code, ionicTimePicker) {
+
+
+
+
+
             $scope.results = [];
             $ionicLoading.show({
                 template: 'Loading data...',
@@ -187,10 +193,35 @@ angular.module('app.controllers', [])
                         //console.log(result);
 
                         $scope.results = angular.fromJson(result);
+
+                        $scope.defaultConfigTableParams = new NgTableParams({}, {dataset: $scope.results});
+                        $scope.customConfigParams = createUsingFullOptions();
                         console.log($scope.results);
                         $ionicLoading.hide();
                     });
             }
+            $scope.self = this;
+
+
+
+
+            function createUsingFullOptions() {
+                var initialParams = {
+                    count: 20 // initial page size
+                };
+                var initialSettings = {
+                    // page size buttons (right set of buttons in demo)
+                    counts: [],
+                    // determines the pager buttons (left set of buttons in demo)
+                    paginationMaxBlocks: 13,
+                    paginationMinBlocks: 2,
+                    dataset: $scope.results
+                };
+                return new NgTableParams(initialParams, initialSettings);
+            }
+
+
+
             setTimeout(function () {
                 $scope.getDataBooking();
             }, 5000);

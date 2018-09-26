@@ -2,13 +2,9 @@
 /*.header .col {
     background-color:lightgrey;
 }
-
-
-
 .col:last-child {
     border-right: solid 1px grey;
 }
-
 .row:last-child .col {
     border-bottom: solid 1px grey;
 }
@@ -23,9 +19,7 @@ body{
 
 }
 
-.main-table tr:nth-child(even) {
-    background-color: #D6EDF3
-}
+
 textarea{
     width:300px !important;
     border: solid 1px #333;
@@ -33,33 +27,36 @@ textarea{
 tr{
 
 }
+th, td { 
+    min-width: 60px;
+}
 .head td{
     padding:2px 6px;
     border:solid 1px #999;
     background-color:#002F3F ;
     color:#fff;
     vertical-align:middle;
+    min-height: 70px;
 }
 .text-center{
     text-align:center
+}
+.result {
+    border:solid 5px #999;
 }
 .result td{
     vertical-align:middle;
     padding:2px 2px;
     text-align:center;
     border:solid 1px #999;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
 }
 
 .actual-text{
-
     max-width:50px;
     text-align:center;
     padding:0 2px;
     border:solid 1px #002F3F !important;
+    z-index: 1;
 }
 
 .actual-text2{
@@ -85,10 +82,11 @@ tr{
     padding: 70px 20px;
 }
 
-
-th, td { 
-    min-width: 60px;
+.search-table-outter {
+    overflow-x:auto; 
+    overflow-y:auto; 
 }
+
 .top-menu-img{
 
     width:260px;
@@ -108,100 +106,57 @@ th, td {
 
 .td-fixed-margin {
     margin-left: 80px;
-    z-index: 99;
+    z-index:999;
 }
 .td-fixed-margin2 {
     margin-left: 160px;
-    z-index: 99;
+    z-index:9999;
 }
 .td-fixed-padding {
     padding-left: 31px;
 }
 .td-fixed {
     position: fixed;
+
     left: 0px;
     width: 80px;
-
-    height: 670px;
+    top:auto;
+    height: 68px;
     word-wrap:break-word;
-    z-index: 99;
+    z-index:9;
+
 }
 .td-a{
-    padding-left: 227px !important;
-    text-align: right !important;
-
+    margin-left: 240px !important;
+    display: block;
+    min-height: 60px;
 }
 .gray-background {
     background-color: #FEFEFE;
+} 
+.main-table tr:nth-child(even) {
+    /*  background-color: #D6EDF3*/
 }
-.ng-binding{
-
+.ng-table-counts{
+    display: none;
 }
-.td-b{
-    min-width: 
-        100px;
+.pagination{
+    display: inline-block;
 }
-.actual-dropdown{
-    position: relative;
-    display: block;
-    content:'-Select-'
+.pagination li{
+    display: inline-block;
+    float: left;
+    
 }
-/*version2*/
-.zui-table {
-    border: none;
-    border-right: solid 1px #DDEFEF;
-    border-collapse: separate;
-    border-spacing: 0;
-    font: normal 13px Arial, sans-serif;
+.pagination li a{
+    background-color: #09f;
+    padding:5px 10px;
+    color:#fff;;
+    margin:20px 5px;   
+    text-decoration: none;
+    border-radius: 5px;
+    
 }
-.zui-table thead th {
-    background-color: #DDEFEF;
-    border: none;
-    color: #336B6B;
-    padding: 10px;
-    text-align: left;
-    text-shadow: 1px 1px 1px #fff;
-    white-space: nowrap;
-}
-.zui-table tbody td {
-    border-bottom: solid 1px #DDEFEF;
-    color: #333;
-    padding: 10px;
-    text-shadow: 1px 1px 1px #fff;
-    white-space: nowrap;
-}
-.zui-wrapper {
-    position: relative;
-}
-.zui-scroller {
-    margin-left: 150px;
-    overflow-x: scroll;
-    overflow-y: visible;
-    padding-bottom: 5px;
-    width: auto;
-    z-index: 1;
-}
-.zui-table .zui-sticky-col {
-    border-left: solid 1px #DDEFEF;
-    border-right: solid 1px #DDEFEF;
-    left: 0;
-    position: absolute;
-    top: auto;
-    width: 60px;
-}
-.zui-table .zui-sticky-col2 {
-    border-left: solid 1px #DDEFEF;
-    border-right: solid 1px #DDEFEF;
-    left: 80px;
-    position: absolute;
-    top: auto;
-    width: 60px;
-}
-.zui-table .zui-sticky-col3 {
-    border-left: solid 1px #DDEFEF;
-    border-right: solid 1px #DDEFEF;
-    left: 120px;
-    position: absolute;
-    top: auto;
-    width: 60px;
+.ng-table-pager{
+  margin-top: 20px;  
 }
